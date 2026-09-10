@@ -1,0 +1,19 @@
+# Enlaces rotos sobre dist/ (docs/roadmap/08 §3.4): internos y externos, con reintentos.
+# Se ejecuta siempre en Docker (`pnpm check:links`), igual en local que en CI, así que las rutas son las del
+# contenedor: /input es la raíz del repositorio.
+
+root_dir = "/input/dist"
+# Un enlace a un directorio (`/en/privacy/`) solo es válido si existe su index.html.
+index_files = ["index.html"]
+
+max_retries = 3
+retry_wait_time = 2
+timeout = 20
+no_progress = true
+
+# 429 (límite de peticiones, típico de GitHub) no es un enlace roto.
+accept = ["200..=299", "429"]
+
+# El dominio de producción aún no sirve la web (F9): canonical, hreflang, og:image y sitemap se comprueban
+# contra el propio dist/. Tras el lanzamiento se puede quitar para validar también el despliegue real.
+remap = ['^https://enki\.rezzt\.dev/(.*)$ file:///input/dist/$1']

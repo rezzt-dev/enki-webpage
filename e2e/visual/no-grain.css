@@ -1,0 +1,4 @@
+/* El grano es ruido: no aporta a la comparación y multiplica el peso de cada captura. */
+.grain {
+  display: none !important;
+}

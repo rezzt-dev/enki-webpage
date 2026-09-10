@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+dist/
+.astro/
+playwright-report/
+test-results/
+e2e/visual/__screenshots__/

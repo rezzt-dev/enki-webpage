@@ -63,6 +63,15 @@ const loadAnalytics =
         document.documentElement.classList.add("js");
       })();
     </script>
+    {/* Sin JS no hay cambio de tema ni menú móvil: se ocultan sus botones (la cabecera muestra el CTA). */}
+    <noscript>
+      <style is:inline>
+        [data-theme-toggle],
+        [data-menu-open] {
+          display: none !important;
+        }
+      </style>
+    </noscript>
     <Seo
       locale={locale}
       page={page}

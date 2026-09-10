@@ -1,0 +1,4 @@
+/* La cabecera fija se superpone a la sección que quede debajo según el scroll: tiene su propia captura. */
+body > div:has(> [data-header]) {
+  visibility: hidden !important;
+}

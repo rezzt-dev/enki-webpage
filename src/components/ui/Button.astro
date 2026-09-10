@@ -10,8 +10,10 @@ type Props = (HTMLAttributes<"a"> & HTMLAttributes<"button">) & {
   size?: "md" | "sm";
 };
 
-const { variant = "primary", size = "md", href, class: className, ...rest } = Astro.props;
+const { variant = "primary", size = "md", href, type, class: className, ...rest } = Astro.props;
 const Tag = href ? "a" : "button";
+// Un <button> sin `type` envía el formulario que lo contenga: por defecto es un botón normal.
+const buttonType = href ? undefined : (type ?? "button");
 
 const base =
   "group inline-flex items-center justify-center gap-2 font-bold uppercase transition-colors duration-200 ease-out-soft disabled:cursor-not-allowed disabled:opacity-40";
@@ -29,6 +31,7 @@ const variants = {
 
 <Tag
   href={href}
+  type={buttonType}
   class:list={[base, sizes[size], variants[variant], variant === "ghost" && "min-h-0", className]}
   {...rest}
 >

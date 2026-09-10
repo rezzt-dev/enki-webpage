@@ -1,0 +1,25 @@
+# Actualizaciones de dependencias (docs/roadmap/08 §3.4). El repositorio solo contiene la landing, así que
+# el directorio es la raíz.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Mismo margen que `minimumReleaseAge` de pnpm-workspace.yaml: nada publicado hace menos de 24 h.
+    cooldown:
+      default-days: 1
+    open-pull-requests-limit: 5
+    groups:
+      astro:
+        patterns: ["astro", "@astrojs/*"]
+      # La imagen Docker de los tests sigue a @playwright/test (web.yml y scripts/playwright-docker.sh).
+      playwright:
+        patterns: ["@playwright/test", "@axe-core/playwright"]
+      lint-format:
+        patterns: ["eslint", "eslint-*", "@eslint/*", "typescript-eslint", "prettier", "prettier-*", "globals"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

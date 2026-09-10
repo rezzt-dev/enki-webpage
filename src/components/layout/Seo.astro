@@ -66,6 +66,7 @@ const image = abs(imageProp ?? `/og/og-${ogFile}.png`);
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={image} />
 
+{/* `<` escapado: ningún texto del copy puede cerrar el <script> antes de tiempo (`</script>`). */}
 {jsonLd.map((data) => (
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(data)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(data).replace(/</g, "\\u003c")}></script>
 ))}

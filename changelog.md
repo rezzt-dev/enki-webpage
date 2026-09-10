@@ -14,6 +14,62 @@ Formato y reglas / format and rules: [`AGENTS.md`](AGENTS.md).
 
 ## [SIN VERSIONAR] / UNRELEASED
 
+### AÑADIR SUITE DE PRUEBAS E2E Y QA CON PLAYWRIGHT, CI Y CORRECCIONES DE ACCESIBILIDAD
+
+- **Fecha / Date:** 2026-09-10
+- **Commit:** `update | web: añadir suite de pruebas e2e y qa con playwright, ci y correcciones de accesibilidad`
+- **Tipo / Type:** update
+
+**ES**
+
+- Añadir una suite de pruebas completa con una sola configuracion de
+  Playwright: interaccion en Chromium, Firefox y WebKit de 375 a 1920 px, SEO
+  y analitica, accesibilidad con axe-core sobre las 24 rutas por tema y
+  tamaño, y regresion visual. Cada ejecucion levanta su propio build de
+  preview y nunca toca los servicios reales de analitica ni del formulario.
+- Ejecutar la regresion visual y WebKit dentro de la imagen oficial de
+  Playwright para que las capturas no dependan de la maquina.
+- Añadir integracion continua en GitHub Actions: lint, formato, `check`,
+  build, validacion de HTML, SEO y peso, auditoria de dependencias,
+  Playwright, Lighthouse y comprobacion de enlaces rotos; y `dependabot` para
+  actualizar dependencias y acciones cada semana.
+- Añadir comprobaciones de HTML (`html-validate`) y de enlaces (`lychee`)
+  sobre la web ya construida, y fijar la configuracion de Prettier.
+- Actualizar las guias de commit (`AGENTS.md` y `.docs/commit-guidelines.md`):
+  el cuerpo del commit es una lista de Markdown no numerada y el titulo y el
+  cuerpo se muestran en bloques de codigo separados.
+- Corregir varios detalles de accesibilidad y comportamiento que detectan las
+  pruebas: los botones no envian sin querer el formulario que los contiene, el
+  error del formulario "avisame" se anuncia como texto en lugar de una burbuja
+  del navegador, la tabla comparativa se puede desplazar con el teclado, y el
+  tema y el menu ocultan sus botones cuando no hay JavaScript.
+- Documentar en `README.md` como ejecutar las pruebas, la QA y la CI.
+
+**EN**
+
+- Add a full test suite from a single Playwright config: interaction on
+  Chromium, Firefox and WebKit from 375 to 1920 px, SEO and analytics,
+  accessibility with axe-core across the 24 routes per theme and size, and
+  visual regression. Each run builds its own preview and never touches the
+  real analytics or form services.
+- Run visual regression and WebKit inside the official Playwright image so the
+  screenshots do not depend on the machine.
+- Add continuous integration on GitHub Actions: lint, format, `check`, build,
+  HTML validation, SEO and size budgets, dependency audit, Playwright,
+  Lighthouse and broken-link checking; plus `dependabot` to update
+  dependencies and actions weekly.
+- Add HTML (`html-validate`) and link (`lychee`) checks over the built site,
+  and pin the Prettier configuration.
+- Update the commit guides (`AGENTS.md` and `.docs/commit-guidelines.md`): the
+  commit body is an unordered Markdown list and the title and body are shown in
+  separate code blocks.
+- Fix several accessibility and behaviour issues the tests catch: buttons no
+  longer submit their surrounding form by accident, the "notify me" form error
+  is announced as text instead of a browser bubble, the comparison table can
+  be scrolled with the keyboard, and the theme and menu hide their buttons
+  when JavaScript is off.
+- Document in `README.md` how to run the tests, QA and CI.
+
 ### AÑADIR LICENCIA PROPIETARIA Y GUIAS DE COMMIT Y CHANGELOG
 
 - **Fecha / Date:** 2026-09-10

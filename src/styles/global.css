@@ -152,7 +152,7 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-bg font-sans text-text antialiased;
+    @apply bg-bg text-text font-sans antialiased;
     text-rendering: optimizeLegibility;
   }
   ::selection {

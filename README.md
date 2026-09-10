@@ -21,6 +21,56 @@ pnpm lint && pnpm format:check && pnpm check
 pnpm brand-assets     # regenera public/og/*.png y public/apple-touch-icon.png
 ```
 
+## Pruebas y QA
+
+Plan completo en `docs/roadmap/08-testing-qa.md`. Una sola configuración, [`playwright.config.ts`](playwright.config.ts),
+que construye un build propio de E2E (equivalente a un preview: Umami configurado pero inactivo y un usuario
+de Buttondown ficticio que los tests interceptan; nunca se toca el servicio real) y lo sirve en el puerto 4322.
+
+```bash
+pnpm test:e2e         # interacción en Chromium, Firefox y WebKit (375–1920 px) + SEO y analítica
+pnpm test:a11y        # axe-core: 24 rutas × 2 temas × 375/1280 px
+pnpm test:docker      # toda la suite dentro de la imagen oficial de Playwright (la misma del CI)
+pnpm test:visual      # regresión visual, siempre en Docker
+pnpm check:html       # html-validate sobre dist/ (tras `pnpm build`)
+pnpm check:links      # lychee sobre dist/, en Docker: enlaces internos y externos
+```
+
+| Proyecto                                                            | Qué ejecuta                                                              |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `chromium-375/768/1280/1920`, `firefox-375/1280`, `webkit-375/1280` | `navigation`, `i18n`, `theme`, `access`, `modules`, `faq`, `notify-form` |
+| `static`                                                            | `seo`, `analytics` (independientes del navegador)                        |
+| `a11y`                                                              | `e2e/a11y/`                                                              |
+| `visual`                                                            | `e2e/visual/`, capturas en `e2e/visual/__screenshots__/`                 |
+
+Filtra con `--project`, por ejemplo `pnpm exec playwright test --project=chromium-375 e2e/faq.spec.ts`.
+WebKit necesita librerías de sistema que Playwright solo instala en Debian/Ubuntu; en otras distribuciones
+(Arch, Fedora…) usa `pnpm test:docker --project=webkit-*`.
+
+### Regresión visual: actualizar las capturas de referencia
+
+Las capturas solo se generan y se comparan dentro de Docker, con la misma imagen que el CI, para que no
+dependan de las fuentes ni del renderizado de cada máquina. Tras un cambio visual intencionado:
+
+```bash
+pnpm test:docker --project=visual --update-snapshots
+git add e2e/visual/__screenshots__
+```
+
+Revisa las imágenes cambiadas en el diff del PR antes de aprobarlo: aprobar el PR es aprobar la nueva
+referencia. Si el CI falla en `playwright · visual`, el artefacto `playwright-visual` contiene el HTML report
+con la captura esperada, la real y la diferencia.
+
+### CI
+
+[`.github/workflows/web.yml`](.github/workflows/web.yml): lint → format → check → build → html-validate →
+SEO y peso → `pnpm audit` → Playwright → Lighthouse → lychee. En un push a una rama de trabajo solo corre
+Chromium; en los PR hacia `main` y en `main`, la matriz completa con Firefox, WebKit y regresión visual.
+La imagen Docker de los tests sigue a la versión de `@playwright/test`: al actualizar el paquete no hay que
+tocar nada más.
+
+## Variables de entorno
+
 Variables en `.env` (ver `.env.example`): `PUBLIC_UMAMI_*` (analítica, solo se carga en producción) y
 `PUBLIC_BUTTONDOWN_USER` (formulario "avísame"; sin ella el formulario avisa de que no está conectado).
 

@@ -151,6 +151,10 @@ document.querySelectorAll<HTMLFormElement>("[data-notify-form]").forEach((form) 
   const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
   const submitLabel = form.querySelector<HTMLElement>("[data-submit-label]");
   const idleLabel = submitLabel?.textContent ?? "";
+  // Con JS valida este script: así el error es un texto asociado al campo y anunciado (aria-live), no la
+  // burbuja del navegador, que además impediría que llegara a dispararse `submit`. Sin JS sigue la
+  // validación nativa de `required` y `type="email"`.
+  form.noValidate = true;
 
   const setStatus = (message: string, error = false) => {
     if (!status) return;

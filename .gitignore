@@ -9,6 +9,8 @@ dist/
 
 # dependencies
 node_modules/
+# store de pnpm que crearía una instalación dentro de Docker (scripts/playwright-docker.sh)
+.pnpm-store/
 
 # logs
 npm-debug.log*

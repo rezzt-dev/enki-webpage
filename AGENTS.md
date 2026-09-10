@@ -23,8 +23,10 @@ Cada vez que se pida el titulo y la descripcion de un commit:
 1. Redacta el mensaje de commit siguiendo **FORMATO DEL COMMIT** (abajo).
 2. En la **misma respuesta**, añade una seccion nueva a
    [`changelog.md`](changelog.md) siguiendo **FORMATO DEL CHANGELOG** (abajo).
-3. Muestra al usuario las dos cosas: el mensaje de commit y el fragmento que se
-   ha añadido al changelog.
+3. Muestra al usuario el resultado en **bloques de codigo separados**: uno para
+   el titulo del commit, otro para el cuerpo del commit y otro para el fragmento
+   que se ha añadido al changelog. Nunca juntes el titulo y el cuerpo en el
+   mismo bloque.
 
 El changelog es la fuente que leen las personas usuarias y los desarrolladores:
 nunca deben tener que abrir el commit para enterarse de que ha cambiado.
@@ -39,17 +41,17 @@ nunca deben tener que abrir el commit para enterarse de que ha cambiado.
 <prefijo> | <resumen corto en imperativo>
 ```
 
-El separador es siempre ` | ` (espacio, barra vertical, espacio). El
+El separador es siempre `|` (espacio, barra vertical, espacio). El
 `<prefijo>` es siempre una de estas cinco palabras, en minusculas, y nunca se
 combinan ni se inventan otras:
 
-| prefijo       | cuando usarlo                                                                                                                          |
+| prefijo       | cuando usarlo                                                                                                                         |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **update**    | trabajo normal hacia adelante: se añade o mejora una funcionalidad, contenido o documento existente. es el prefijo por defecto.        |
-| **fix**       | se corrige un error o comportamiento incorrecto detectado durante el desarrollo, sin urgencia de publicacion inmediata.                |
-| **hotfix**    | se corrige algo urgente que afecta a una version ya publicada o a un bloqueo critico. solo cuando la correccion es realmente urgente.  |
-| **changes**   | cambios estructurales o no funcionales: reorganizar carpetas, renombrar ficheros, tocar configuracion o tooling, dependencias.         |
-| **changelog** | el unico proposito del commit es editar `changelog.md` (por ejemplo, al cerrar una version).                                           |
+| **update**    | trabajo normal hacia adelante: se añade o mejora una funcionalidad, contenido o documento existente. es el prefijo por defecto.       |
+| **fix**       | se corrige un error o comportamiento incorrecto detectado durante el desarrollo, sin urgencia de publicacion inmediata.               |
+| **hotfix**    | se corrige algo urgente que afecta a una version ya publicada o a un bloqueo critico. solo cuando la correccion es realmente urgente. |
+| **changes**   | cambios estructurales o no funcionales: reorganizar carpetas, renombrar ficheros, tocar configuracion o tooling, dependencias.        |
+| **changelog** | el unico proposito del commit es editar `changelog.md` (por ejemplo, al cerrar una version).                                          |
 
 En este repositorio el resumen suele empezar por `web:`.
 
@@ -65,16 +67,16 @@ changelog | web: cerrar la seccion de changelog para la version 0.1
 
 ### Descripcion (cuerpo)
 
-- Cada bloque logico en su propio parrafo, separados por una linea en blanco, en
-  imperativo.
-- Dentro de un parrafo no metas saltos de linea innecesarios: escribe cada
-  parrafo como una sola linea continua y deja que el cliente de git lo ajuste.
-  Los unicos saltos permitidos son la linea en blanco entre parrafos y la
-  separacion de la linea de atribucion.
-- Usa Markdown en el cuerpo: nombres de ficheros, rutas, comandos e
+- El cuerpo es siempre **una lista de Markdown no numerada**: cada item empieza
+  por `-`. Nunca se usan listas numeradas ni parrafos sueltos.
+- Cada item es un bloque logico en imperativo, escrito como **una sola linea
+  continua**, sin saltos de linea internos: deja que el cliente de git lo
+  ajuste. No se dejan lineas en blanco entre items.
+- Usa Markdown dentro de cada item: nombres de ficheros, rutas, comandos e
   identificadores siempre entre backticks.
 - Explica el **que** y el **por que**, no el detalle linea a linea.
-- Termina con la linea de atribucion que corresponda al entorno.
+- Cierra con una linea en blanco y la linea de atribucion que corresponda al
+  entorno.
 
 ---
 

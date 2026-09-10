@@ -71,13 +71,8 @@ const cta = `${home}#access`;
       >
         <Icon name="menu" class="size-5" />
       </button>
+      {/* Sin JS, el tema y el menú no funcionan: BaseLayout oculta sus botones desde el <head>. */}
       <noscript>
-        <style is:inline>
-          [data-theme-toggle],
-          [data-menu-open] {
-            display: none !important;
-          }
-        </style>
         <a
           href={cta}
           aria-label={t.nav.cta}
@@ -108,7 +103,11 @@ const cta = `${home}#access`;
         <Icon name="close" class="size-5" />
       </button>
     </div>
-    <nav aria-label={t.a11y.mainNav} class="flex flex-1 flex-col justify-center">
+    {/*
+      Sin <nav>: el propio diálogo ya se llama "Navegación principal" y, al ser modal, deja inerte la
+      cabecera. Un segundo landmark con el mismo nombre que el <nav> de la cabecera sería ambiguo.
+    */}
+    <div class="flex flex-1 flex-col justify-center">
       <ul class="flex flex-col gap-7">
         {links.map((link) => (
           <li>
@@ -121,7 +120,7 @@ const cta = `${home}#access`;
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
     <Button href={cta} class="w-full" data-track="cta_click" data-track-id="menu">
       {t.nav.cta}
     </Button>

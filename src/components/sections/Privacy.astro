@@ -23,15 +23,17 @@ const { t, number } = Astro.props;
   />
 
   <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
-    <figure class="self-start border border-ink/10 bg-bg-alt lg:col-span-5" data-reveal>
+    {/* El nombre accesible va en la figura: `aria-label` no está permitido en `<pre>` (rol genérico). */}
+    <figure
+      class="self-start border border-ink/10 bg-bg-alt lg:col-span-5"
+      aria-label={t.privacy.treeLabel}
+      data-reveal
+    >
       <figcaption class="flex items-center justify-between border-b border-ink/10 px-5 py-3 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink/60">
         <span>~/{t.privacy.tree[0]}</span>
         <Icon name="folder-outline" class="size-4" />
       </figcaption>
-      <pre
-        class="overflow-x-auto p-5 font-mono text-sm leading-7 text-text-2 md:p-7"
-        aria-label={t.privacy.treeLabel}
-      >{t.privacy.tree.join("\n")}</pre>
+      <pre class="overflow-x-auto p-5 font-mono text-sm leading-7 text-text-2 md:p-7">{t.privacy.tree.join("\n")}</pre>
     </figure>
 
     <ul class="grid gap-px border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:col-span-7">

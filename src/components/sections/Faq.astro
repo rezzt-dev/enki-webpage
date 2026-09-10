@@ -26,10 +26,7 @@ const { t, number } = Astro.props;
         <details class="faq-item group border-b border-ink/10" data-faq-id={String(i + 1)}>
           <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-6 transition-opacity duration-200 hover:opacity-70 [&::-webkit-details-marker]:hidden">
             <span class="text-lg font-bold leading-snug md:text-xl">{item.q}</span>
-            <Icon
-              name="add"
-              class="mt-1 size-5 shrink-0 transition-transform duration-300 ease-out-soft group-open:rotate-45"
-            />
+            <Icon name="add" class="mt-1 size-5 transition-transform duration-300 ease-out-soft group-open:rotate-45" />
           </summary>
           <p class="max-w-3xl pb-7 leading-relaxed text-text-2">
             {before}
