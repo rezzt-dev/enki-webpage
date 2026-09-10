@@ -1,0 +1,28 @@
+---
+/** Cómo funciona (03 §2, sección 6): los tres pasos reales del primer arranque. */
+import Section from "@/components/ui/Section.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+}
+
+const { t, number } = Astro.props;
+---
+
+<Section id="how" alt labelledby="how-title">
+  <SectionHeader number={number} eyebrow={t.how.eyebrow} title={t.how.title} titleId="how-title" />
+  <ol class="grid gap-px border border-ink/10 bg-ink/10 md:grid-cols-3">
+    {t.how.steps.map((step, i) => (
+      <li class="flex flex-col gap-5 bg-bg-alt p-7 md:p-10" data-reveal style={`--reveal-index: ${i}`}>
+        <span class="font-mono text-5xl font-light text-ink/50 md:text-6xl" aria-hidden="true">
+          {String(i + 1).padStart(2, "0")}
+        </span>
+        <h3 class="text-subheading font-bold uppercase">{step.title}</h3>
+        <p class="leading-relaxed text-text-2">{step.body}</p>
+      </li>
+    ))}
+  </ol>
+</Section>

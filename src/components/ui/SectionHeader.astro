@@ -1,0 +1,31 @@
+---
+/**
+ * Cabecera estándar de sección: eyebrow numerado + h2 gigante a la izquierda y, en escritorio, el
+ * párrafo a la derecha alineado abajo (patrón de my-web, sistema-diseno-web.md §8).
+ */
+import Eyebrow from "./Eyebrow.astro";
+
+interface Props {
+  number: number;
+  eyebrow: string;
+  title: string;
+  titleId: string;
+  lead?: string;
+}
+
+const { number, eyebrow, title, titleId, lead } = Astro.props;
+const index = String(number).padStart(2, "0");
+---
+
+<header class="mb-12 flex flex-col gap-6 md:mb-16 lg:flex-row lg:items-end lg:justify-between lg:gap-16" data-reveal>
+  <div class="max-w-3xl">
+    <Eyebrow class="mb-4">
+      <span aria-hidden="true">{index} — </span>
+      {eyebrow}
+    </Eyebrow>
+    <h2 id={titleId} class="text-section font-bold uppercase text-balance">
+      {title}
+    </h2>
+  </div>
+  {lead && <p class="max-w-md text-base leading-relaxed text-text-2 lg:pb-1 lg:text-right">{lead}</p>}
+</header>

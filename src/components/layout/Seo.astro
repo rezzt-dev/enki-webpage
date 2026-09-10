@@ -1,0 +1,71 @@
+---
+/**
+ * Metadatos por página (docs/roadmap/05 §3.3): title, description, canonical, hreflang recíprocos de los
+ * seis idiomas, Open Graph, Twitter Card y JSON-LD.
+ */
+import { locales, localeMeta, pagePath, defaultLocale, type Locale, type PageId } from "@/i18n/config";
+
+interface Props {
+  locale: Locale;
+  page: PageId;
+  title: string;
+  description: string;
+  imageAlt: string;
+  /** Permiten sobrescribir la ruta/imagen derivadas en páginas especiales. */
+  path?: string | undefined;
+  image?: string | undefined;
+  jsonLd?: Record<string, unknown>[] | undefined;
+  noindex?: boolean | undefined;
+}
+
+const {
+  locale,
+  page,
+  title,
+  description,
+  imageAlt,
+  path,
+  image: imageProp,
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+const site = Astro.site ?? new URL("https://enki.rezzt.dev");
+const abs = (path: string) => new URL(path, site).href;
+const canonical = abs(path ?? pagePath(locale, page));
+
+// Una imagen OG por idioma base; las variantes regionales reutilizan la de su idioma.
+const ogFile = { es: "es", "es-419": "es", en: "en", "en-gb": "en", de: "de", fr: "fr" }[locale];
+const image = abs(imageProp ?? `/og/og-${ogFile}.png`);
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex &&
+  locales.map((l) => <link rel="alternate" hreflang={localeMeta[l].htmlLang} href={abs(pagePath(l, page))} />)}
+{!noindex && <link rel="alternate" hreflang="x-default" href={abs(pagePath(defaultLocale, page))} />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Enki" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:locale" content={localeMeta[locale].ogLocale} />
+{locales
+  .filter((l) => l !== locale)
+  .map((l) => (
+    <meta property="og:locale:alternate" content={localeMeta[l].ogLocale} />
+  ))}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+{jsonLd.map((data) => (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(data)}></script>
+))}

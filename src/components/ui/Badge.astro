@@ -1,0 +1,19 @@
+---
+/** Etiqueta compacta, con variante de contorno o invertida. */
+interface Props {
+  variant?: "outline" | "solid";
+  class?: string;
+}
+
+const { variant = "outline", class: className } = Astro.props;
+---
+
+<span
+  class:list={[
+    "inline-flex items-center px-2 py-1 font-mono text-[0.625rem] font-bold uppercase tracking-[0.15em]",
+    variant === "solid" ? "bg-ink text-ink-on" : "border border-ink/20 text-text-2",
+    className,
+  ]}
+>
+  <slot />
+</span>

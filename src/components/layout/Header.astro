@@ -1,0 +1,129 @@
+---
+/**
+ * Cabecera flotante "glass" (sistema-diseno-web.md §5.3, §7.1) + menú móvil a pantalla completa.
+ * Los enlaces llevan la ruta de la home delante del ancla para funcionar también desde las páginas legales.
+ */
+import Logo from "@/components/ui/Logo.astro";
+import Icon from "@/components/ui/Icon.astro";
+import Button from "@/components/ui/Button.astro";
+import LangSwitch from "./LangSwitch.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import { pagePath, type Locale, type PageId } from "@/i18n/config";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+  locale: Locale;
+  page: PageId;
+  t: Dictionary;
+}
+
+const { locale, page, t } = Astro.props;
+const home = pagePath(locale, "home");
+const links = [
+  { href: `${home}#modules`, label: t.nav.modules },
+  { href: `${home}#privacy`, label: t.nav.privacy },
+  { href: `${home}#compare`, label: t.nav.compare },
+  { href: `${home}#faq`, label: t.nav.faq },
+];
+const cta = `${home}#access`;
+---
+
+<div class="fixed inset-x-0 top-0 z-50 p-3 md:p-4">
+  <header
+    data-header
+    class="mx-auto flex max-w-[1350px] items-center justify-between gap-4 border border-ink/10 bg-bg/70 px-4 py-2.5 backdrop-blur-md transition-[border-color,box-shadow] duration-300 data-scrolled:border-ink/20 data-scrolled:shadow-lg data-scrolled:shadow-black/20"
+  >
+    <a href={home} aria-label={t.a11y.home} class="py-1.5 transition-opacity duration-200 hover:opacity-70">
+      <Logo />
+    </a>
+
+    <nav aria-label={t.a11y.mainNav} class="hidden lg:block">
+      <ul class="flex items-center gap-8">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="group relative py-1 text-xs font-bold uppercase tracking-[0.2em] text-text-2 transition-colors duration-200 hover:text-text"
+            >
+              {link.label}
+              <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 ease-out-soft group-hover:scale-x-100" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <LangSwitch locale={locale} page={page} label={t.a11y.language} />
+      <ThemeToggle labelLight={t.a11y.themeLight} labelDark={t.a11y.themeDark} />
+      {/* El envoltorio controla la visibilidad: Button ya lleva `inline-flex`, que ganaría a `hidden`. */}
+      <div class="hidden sm:block">
+        <Button href={cta} size="sm" variant="outline" data-track="cta_click" data-track-id="header">
+          {t.nav.cta}
+        </Button>
+      </div>
+      <button
+        type="button"
+        data-menu-open
+        aria-label={t.a11y.menuOpen}
+        aria-haspopup="dialog"
+        class="flex size-9 items-center justify-center border border-ink/50 transition-colors duration-200 hover:bg-ink hover:text-ink-on lg:hidden"
+      >
+        <Icon name="menu" class="size-5" />
+      </button>
+      <noscript>
+        <style is:inline>
+          [data-theme-toggle],
+          [data-menu-open] {
+            display: none !important;
+          }
+        </style>
+        <a
+          href={cta}
+          aria-label={t.nav.cta}
+          class="flex size-9 items-center justify-center border border-ink sm:hidden"
+        >
+          <Icon name="arrow-forward" class="size-4 rotate-90" />
+          <span class="sr-only">{t.nav.cta}</span>
+        </a>
+      </noscript>
+    </div>
+  </header>
+</div>
+
+<dialog
+  data-menu
+  aria-label={t.a11y.mainNav}
+  class="m-0 h-dvh max-h-none w-full max-w-none bg-bg/95 p-0 text-text backdrop-blur-md backdrop:bg-transparent"
+>
+  <div class="flex h-full flex-col px-6 py-6">
+    <div class="flex items-center justify-between">
+      <Logo />
+      <button
+        type="button"
+        data-menu-close
+        aria-label={t.a11y.menuClose}
+        class="flex size-11 items-center justify-center border border-ink/50 transition-colors duration-200 hover:bg-ink hover:text-ink-on"
+      >
+        <Icon name="close" class="size-5" />
+      </button>
+    </div>
+    <nav aria-label={t.a11y.mainNav} class="flex flex-1 flex-col justify-center">
+      <ul class="flex flex-col gap-7">
+        {links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-3xl font-bold uppercase tracking-[0.08em] transition-opacity duration-200 hover:opacity-60"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <Button href={cta} class="w-full" data-track="cta_click" data-track-id="menu">
+      {t.nav.cta}
+    </Button>
+  </div>
+</dialog>

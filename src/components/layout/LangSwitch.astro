@@ -1,0 +1,42 @@
+---
+/** Selector de los seis idiomas con `<details>` nativo: funciona sin JS; site.ts solo lo cierra al pulsar fuera. */
+import Icon from "@/components/ui/Icon.astro";
+import { locales, localeMeta, pagePath, type Locale, type PageId } from "@/i18n/config";
+
+interface Props {
+  locale: Locale;
+  page: PageId;
+  label: string;
+}
+
+const { locale, page, label } = Astro.props;
+const current = localeMeta[locale];
+---
+
+<details class="relative" data-lang-switch>
+  <summary
+    class="flex h-9 cursor-pointer list-none items-center gap-1.5 border border-ink/50 px-2.5 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.15em] transition-colors duration-200 hover:bg-ink hover:text-ink-on [&::-webkit-details-marker]:hidden"
+    aria-label={`${label}: ${current.label}`}
+  >
+    <Icon name="language" class="size-4" />
+    <span aria-hidden="true">{current.short}</span>
+  </summary>
+  <ul class="absolute right-0 top-full z-10 mt-2 min-w-60 border border-ink/15 bg-panel py-1 shadow-xl shadow-black/30">
+    {locales.map((l) => (
+      <li>
+        <a
+          href={pagePath(l, page)}
+          hreflang={localeMeta[l].htmlLang}
+          lang={localeMeta[l].htmlLang}
+          aria-current={l === locale ? "page" : undefined}
+          data-track="lang_switch"
+          data-track-to={l}
+          class="flex items-center justify-between gap-6 px-4 py-2.5 text-sm text-text-2 transition-colors duration-200 hover:bg-ink hover:text-ink-on aria-[current=page]:font-bold aria-[current=page]:text-text"
+        >
+          {localeMeta[l].label}
+          <span class="font-mono text-[0.625rem] tracking-[0.15em] opacity-70">{localeMeta[l].short}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</details>

@@ -1,0 +1,60 @@
+{
+  "name": "enki-webpage",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "Landing page de Enki — tu segundo cerebro, en tu escritorio.",
+  "packageManager": "pnpm@11.26.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "check:seo": "astro build && node scripts/check-seo.mjs",
+    "check:size": "astro build && node scripts/check-performance-budgets.mjs",
+    "test:a11y": "playwright test --config=playwright.a11y.config.ts",
+    "lighthouse": "lhci autorun",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "brand-assets": "node scripts/generate-brand-assets.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^6.0.5",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@iconify-json/material-symbols": "^1.2.91",
+    "@iconify/utils": "^3.1.7",
+    "@radix-ui/react-tabs": "^1.1.21",
+    "astro": "^7.3.2",
+    "clsx": "^2.1.1",
+    "lenis": "^1.3.26",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@eslint/js": "^10.0.1",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "eslint": "^10.10.0",
+    "eslint-plugin-astro": "^3.1.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.0"
+  }
+}

@@ -1,0 +1,59 @@
+---
+/**
+ * Páginas legales (borradores de docs/roadmap/04 §4). Los huecos `[[AUTOR: …]]` se resaltan hasta que el
+ * titular aporte sus datos (D16); la web no debe publicarse con ninguno pendiente.
+ */
+import Icon from "@/components/ui/Icon.astro";
+import { pagePath, type LegalPage, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n";
+import { site } from "@/lib/site";
+
+interface Props {
+  t: Dictionary;
+  locale: Locale;
+  page: LegalPage;
+}
+
+const { t, locale, page } = Astro.props;
+const content = t.legal.pages[page];
+
+const escapeHtml = (text: string) =>
+  text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/** Texto → HTML seguro: escapa todo y solo inserta el enlace de contacto y el resaltado de huecos. */
+const render = (text: string) =>
+  escapeHtml(text)
+    .replace(
+      "{email}",
+      `<a href="mailto:${site.supportEmail}" class="text-text underline decoration-ink/40 underline-offset-2">${site.supportEmail}</a>`,
+    )
+    .replace(/\[\[AUTOR: ([^\]]+)\]\]/g, '<mark class="bg-highlight/25 px-1 font-mono text-sm text-text">$1</mark>');
+
+const hasPending = content.sections.some((section) => section.body.some((p) => p.includes("[[AUTOR:")));
+---
+
+<section class="pb-24 pt-36 md:pb-32 md:pt-44">
+  <div class="mx-auto max-w-3xl px-4 md:px-6">
+    <a
+      href={pagePath(locale, "home")}
+      class="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] transition-opacity duration-200 hover:opacity-60"
+    >
+      <Icon
+        name="arrow-forward"
+        class="size-4 rotate-180 transition-transform duration-200 group-hover:-translate-x-0.5"
+      />
+      {t.legal.back}
+    </a>
+    <h1 class="mt-10 text-section font-bold uppercase text-balance">{content.title}</h1>
+    {hasPending && <p class="mt-8 border-l-2 border-highlight pl-4 text-sm text-text-2">{t.legal.draft}</p>}
+
+    {content.sections.map((section) => (
+      <section class="mt-12 border-t border-ink/10 pt-8">
+        <h2 class="text-lg font-bold uppercase tracking-[0.05em]">{section.title}</h2>
+        {section.body.map((paragraph) => (
+          <p class="mt-4 leading-relaxed text-text-2" set:html={render(paragraph)} />
+        ))}
+      </section>
+    ))}
+  </div>
+</section>

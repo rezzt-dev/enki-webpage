@@ -1,0 +1,90 @@
+---
+import Logo from "@/components/ui/Logo.astro";
+import Icon from "@/components/ui/Icon.astro";
+import { pagePath, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n";
+import { site } from "@/lib/site";
+
+interface Props {
+  locale: Locale;
+  t: Dictionary;
+}
+
+const { locale, t } = Astro.props;
+const home = pagePath(locale, "home");
+const linkClass = "text-sm text-text-2 transition-colors duration-200 hover:text-text";
+
+const columns = [
+  {
+    title: t.footer.product,
+    links: [
+      { href: `${home}#modules`, label: t.nav.modules },
+      { href: `${home}#privacy`, label: t.nav.privacy },
+      { href: `${home}#compare`, label: t.nav.compare },
+      { href: `${home}#faq`, label: t.nav.faq },
+    ],
+  },
+  {
+    title: t.footer.ecosystem,
+    links: [
+      { href: site.polarUrl, label: "Polar", external: true },
+      { href: site.authorUrl, label: t.footer.portfolio, external: true },
+      { href: site.githubUrl, label: "GitHub", external: true },
+    ],
+  },
+  {
+    title: t.footer.legal,
+    links: [
+      { href: pagePath(locale, "notice"), label: t.legal.pages.notice.title },
+      { href: pagePath(locale, "privacy"), label: t.legal.pages.privacy.title },
+      { href: pagePath(locale, "cookies"), label: t.legal.pages.cookies.title },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-ink/10 bg-bg-alt">
+  <div class="mx-auto max-w-[1200px] px-4 py-16 md:px-6 md:py-20">
+    <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-12">
+      <div class="sm:col-span-2 md:col-span-3">
+        <Logo />
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-text-2">{t.footer.tagline}</p>
+      </div>
+      {columns.map((column) => (
+        <nav aria-label={column.title} class="md:col-span-2">
+          <p class="eyebrow mb-5">{column.title}</p>
+          <ul class="flex flex-col gap-3">
+            {column.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class={linkClass}
+                  rel={"external" in link ? "noopener" : undefined}
+                  target={"external" in link ? "_blank" : undefined}
+                >
+                  {link.label}
+                  {"external" in link && <Icon name="arrow-outward" class="ml-1 inline size-3.5 align-[-2px]" />}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+      <div class="md:col-span-3">
+        <p class="eyebrow mb-5">{t.footer.contact}</p>
+        <a href={`mailto:${site.supportEmail}`} class={linkClass}>
+          {site.supportEmail}
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-3 border-t border-ink/10 pt-8 font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-ink/60 sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        © {site.copyrightYear} {site.authorName}. {t.footer.rights}
+      </p>
+      <p>
+        v{site.version} · {site.stage}
+      </p>
+    </div>
+  </div>
+</footer>

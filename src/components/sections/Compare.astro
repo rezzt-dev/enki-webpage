@@ -1,0 +1,88 @@
+---
+/**
+ * Comparativa nominal (D14). Tabla real (<table>) para lectores de pantalla; en móvil hace scroll
+ * horizontal con la primera columna fija. Datos en src/lib/compare.ts.
+ */
+import Section from "@/components/ui/Section.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import Icon from "@/components/ui/Icon.astro";
+import type { Dictionary } from "@/i18n";
+import { compareRows, products, type Mark } from "@/lib/compare";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+}
+
+const { t, number } = Astro.props;
+const c = t.compare;
+const markLabel = (mark: Mark) => c.values[mark];
+---
+
+<Section id="compare" alt labelledby="compare-title">
+  <SectionHeader number={number} eyebrow={c.eyebrow} title={c.title} titleId="compare-title" lead={c.lead} />
+
+  {/* `relative`: los textos sr-only (absolutos) de las celdas quedan dentro del recorte y no estiran la página en móvil. */}
+  <div class="relative overflow-x-auto border border-ink/10" tabindex="0" aria-label={c.title} data-reveal>
+    <table class="w-full min-w-[640px] border-collapse text-left">
+      <caption class="sr-only">{c.title}</caption>
+      <thead>
+        <tr class="border-b border-ink/10">
+          <th
+            scope="col"
+            class="sticky left-0 z-10 bg-bg-alt px-5 py-4 font-mono text-[0.625rem] font-bold uppercase tracking-[0.2em] text-ink/60"
+          >
+            {c.feature}
+          </th>
+          {products.map((product, i) => (
+            <th
+              scope="col"
+              class:list={[
+                "px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.1em]",
+                i === 0 ? "border-t-2 border-t-ink bg-ink/[0.05]" : "text-text-2",
+              ]}
+            >
+              {product}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {compareRows.map((row) => (
+          <tr class="border-b border-ink/10 last:border-b-0">
+            <th scope="row" class="sticky left-0 z-10 bg-bg-alt px-5 py-4 text-sm font-medium">
+              {c.rows[row.key]}
+              {row.key === "teams" && <span class="mt-1 block text-xs font-normal text-ink/60">{c.teamsNote}</span>}
+            </th>
+            {row.values.map((mark, i) => (
+              <td class:list={["px-5 py-4 text-center", i === 0 && "bg-ink/[0.05]"]}>
+                {mark === "yes" && (
+                  <span class="inline-flex items-center justify-center" title={markLabel(mark)}>
+                    <Icon name="check" class="size-5" />
+                    <span class="sr-only">{markLabel(mark)}</span>
+                  </span>
+                )}
+                {mark === "no" && (
+                  <span class="inline-flex items-center justify-center text-ink/50" title={markLabel(mark)}>
+                    <Icon name="remove" class="size-5" />
+                    <span class="sr-only">{markLabel(mark)}</span>
+                  </span>
+                )}
+                {(mark === "plugin" || mark === "partial") && (
+                  <span class="font-mono text-[0.625rem] font-bold uppercase tracking-[0.15em] text-text-2">
+                    {markLabel(mark)}
+                  </span>
+                )}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-6 flex flex-col gap-1 text-xs leading-relaxed text-ink/60">
+    <p>{c.note}</p>
+    <p>{c.trademarks}</p>
+  </div>
+</Section>

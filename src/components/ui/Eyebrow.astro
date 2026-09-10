@@ -1,0 +1,14 @@
+---
+/** Microetiqueta editorial del sistema de diseño. */
+interface Props {
+  as?: "p" | "span";
+  class?: string;
+  [attribute: string]: unknown;
+}
+
+const { as: Tag = "p", class: className, ...rest }: Props = Astro.props;
+---
+
+<Tag class:list={["eyebrow", className]} {...rest}>
+  <slot />
+</Tag>

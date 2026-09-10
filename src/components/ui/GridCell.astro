@@ -1,0 +1,12 @@
+---
+/** Celda sólida para rejillas separadas por un `gap-px` del contenedor. */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["bg-bg p-8", className]}>
+  <slot />
+</div>

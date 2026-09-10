@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+/* Solo el subconjunto latino: evita emitir variantes cirílicas, griegas y vietnamitas que la web no
+ * utiliza. Las dos fuentes críticas se precargan desde BaseLayout.astro. */
+@font-face {
+  font-family: "Space Grotesk Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 700;
+  src: url("@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+/* Los fallbacks ajustan sus métricas a las fuentes web para que el intercambio no desplace el layout. */
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local("Arial");
+  size-adjust: 105%;
+  ascent-override: 94%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "JetBrains Mono Fallback";
+  src: local("Courier New");
+  size-adjust: 99%;
+  ascent-override: 103%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "JetBrains Mono Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2")
+    format("woff2-variations");
+}
+
+/* ============================================================================
+ * Sistema de diseño de Enki para la web.
+ * Tokens copiados de enki/src/enki/styles/Colors.axaml (docs/roadmap/01 §4.1).
+ * `@theme inline` hace que las utilidades lean la variable directamente, así el cambio de tema
+ * (data-theme en <html>) repinta sin regenerar nada.
+ * ========================================================================== */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-panel-hover: var(--panel-hover);
+  --color-input: var(--input);
+  --color-row-hover: var(--row-hover);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-muted: var(--muted);
+  --color-ink: var(--ink);
+  --color-ink-on: var(--ink-on);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-highlight: var(--highlight);
+}
+
+@theme {
+  --font-sans: "Space Grotesk Variable", "Space Grotesk Fallback", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono Fallback", ui-monospace, monospace;
+
+  --text-hero: clamp(2.75rem, 8vw, 6rem);
+  --text-hero--line-height: 0.9;
+  --text-hero--letter-spacing: -0.04em;
+  --text-section: clamp(1.75rem, 4vw, 3.5rem);
+  --text-section--line-height: 1;
+  --text-section--letter-spacing: -0.03em;
+  --text-subheading: clamp(1.125rem, 2vw, 1.5rem);
+  --text-subheading--line-height: 1.2;
+  --text-subheading--letter-spacing: -0.01em;
+
+  --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
+
+  --animate-panel-in: panel-in 300ms var(--ease-out-soft) both;
+  --animate-pulse-ring: pulse-ring 2s var(--ease-out-soft) infinite;
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--success) 60%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+  }
+}
+
+/* Tema oscuro: el de por defecto (D10). */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121212;
+  --bg-alt: #0d0d0d;
+  --surface: #1a1a1a;
+  --panel: #1b1b1b;
+  --panel-hover: #1f1f1f;
+  --input: #141414;
+  --row-hover: #181818;
+  --text: #f5f5f5;
+  --text-2: #c6c6c6;
+  --muted: #474747;
+  --ink: #ffffff;
+  --ink-on: #000000;
+  --danger: #f87171;
+  --success: #4ade80;
+  --highlight: #f5c542;
+  --grain-opacity: 0.03;
+}
+
+/* Tema claro: misma lógica, polaridad invertida. Estados oscurecidos para que el texto de color
+ * llegue a 3:1 sobre #F5F5F5 (01 §4.1). */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f5f5f5;
+  --bg-alt: #ededed;
+  --surface: #fafafa;
+  --panel: #eaeaea;
+  --panel-hover: #e2e2e2;
+  --input: #efefef;
+  --row-hover: #e6e6e6;
+  --text: #0a0a0a;
+  --text-2: #39393b;
+  --muted: #b8b8b8;
+  --ink: #000000;
+  --ink-on: #ffffff;
+  /* Error/resaltado conservan ≥ 4,5:1; éxito supera 3:1 como borde e indicador no textual. */
+  --danger: #b91c1c;
+  --success: #15803d;
+  --highlight: #92400e;
+  --grain-opacity: 0.05;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg font-sans text-text antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--ink);
+    color: var(--ink-on);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--ink) 20%, transparent);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--ink) 30%, transparent);
+  }
+}
+
+/* Micro-label mono: el elemento tipográfico más distintivo del sistema (nunca por debajo de ink/50). */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--ink) 55%, transparent);
+}
+
+/* Grano de película sobre el negro plano. */
+@utility grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
+/* Reveal al hacer scroll: solo con JS y sin preferencia de movimiento reducido; sin JS todo se ve. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    transition:
+      opacity 600ms var(--ease-out-soft),
+      transform 600ms var(--ease-out-soft);
+    transition-delay: calc(var(--reveal-index, 0) * 80ms);
+  }
+  .js [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* En alto contraste forzado no se depende de colores, transparencias ni fondos invertidos. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+  button,
+  [role="button"],
+  a[class*="border"] {
+    border-color: ButtonText;
+  }
+  [aria-current="page"],
+  [aria-pressed="true"],
+  [aria-selected="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  [data-screen-placeholder] {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Sin JS las pestañas no pueden cambiar de estado: se convierten en una lista completa de módulos. */
+html:not(.js) .modules-tabs-list {
+  display: none;
+}
+html:not(.js) .modules-tabs-panel {
+  display: grid !important;
+}
+
+/* FAQ con <details> nativo: apertura animada donde el navegador lo soporta. */
+details.faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 300ms var(--ease-out-soft),
+    content-visibility 300ms allow-discrete;
+}
+details.faq-item[open]::details-content {
+  block-size: auto;
+}
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+}

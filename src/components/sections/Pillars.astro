@@ -1,0 +1,32 @@
+---
+/** Pilares (03 §2, sección 3): los cuatro principios del README, en rejilla de 1px. */
+import Section from "@/components/ui/Section.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import Icon from "@/components/ui/Icon.astro";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+}
+
+const { t, number } = Astro.props;
+---
+
+<Section id="pillars" labelledby="pillars-title">
+  <SectionHeader number={number} eyebrow={t.pillars.eyebrow} title={t.pillars.title} titleId="pillars-title" />
+  <ul class="grid gap-px border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
+    {t.pillars.items.map((item, i) => (
+      <li class="flex flex-col gap-6 bg-bg p-7 md:p-8" data-reveal style={`--reveal-index: ${i}`}>
+        <div class="flex items-center justify-between text-ink/60">
+          <Icon name={item.icon} class="size-6 text-ink" />
+          <span class="font-mono text-[0.625rem] tracking-[0.2em]" aria-hidden="true">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+        </div>
+        <h3 class="text-lg font-bold uppercase leading-tight">{item.title}</h3>
+        <p class="text-sm leading-relaxed text-text-2">{item.body}</p>
+      </li>
+    ))}
+  </ul>
+</Section>

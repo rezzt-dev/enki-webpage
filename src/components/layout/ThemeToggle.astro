@@ -1,0 +1,24 @@
+---
+/** Alterna tema oscuro/claro. El icono muestra el tema al que se cambia; site.ts actualiza la etiqueta. */
+import Icon from "@/components/ui/Icon.astro";
+
+interface Props {
+  labelLight: string;
+  labelDark: string;
+}
+
+const { labelLight, labelDark } = Astro.props;
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  data-label-light={labelLight}
+  data-label-dark={labelDark}
+  aria-label={labelLight}
+  aria-pressed="false"
+  class="flex size-9 items-center justify-center border border-ink/50 transition-colors duration-200 hover:bg-ink hover:text-ink-on"
+>
+  <Icon name="light-mode-outline" class="size-4 in-data-[theme=light]:hidden" />
+  <Icon name="dark-mode-outline" class="hidden size-4 in-data-[theme=light]:block" />
+</button>

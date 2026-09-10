@@ -1,0 +1,36 @@
+---
+/**
+ * Botón del sistema de diseño (docs/roadmap/03 §4): esquinas rectas, mayúsculas, tracking ancho e
+ * inversión de color al hover. Con `href` se pinta como enlace; sin él, como `<button>`.
+ */
+import type { HTMLAttributes } from "astro/types";
+
+type Props = (HTMLAttributes<"a"> & HTMLAttributes<"button">) & {
+  variant?: "primary" | "outline" | "ghost";
+  size?: "md" | "sm";
+};
+
+const { variant = "primary", size = "md", href, class: className, ...rest } = Astro.props;
+const Tag = href ? "a" : "button";
+
+const base =
+  "group inline-flex items-center justify-center gap-2 font-bold uppercase transition-colors duration-200 ease-out-soft disabled:cursor-not-allowed disabled:opacity-40";
+const sizes = {
+  md: "min-h-12 px-7 text-xs tracking-[0.2em]",
+  sm: "min-h-9 px-4 text-[0.6875rem] tracking-[0.2em]",
+};
+const variants = {
+  primary: "bg-ink text-ink-on hover:bg-ink/85 active:translate-y-px active:bg-ink/75",
+  outline:
+    "border border-ink text-ink hover:bg-ink hover:text-ink-on active:translate-y-px active:bg-ink/85 active:text-ink-on",
+  ghost: "px-0 text-ink hover:opacity-60 active:translate-y-px active:opacity-45",
+};
+---
+
+<Tag
+  href={href}
+  class:list={[base, sizes[size], variants[variant], variant === "ghost" && "min-h-0", className]}
+  {...rest}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,45 @@
+---
+/** Ecosistema (03 §2, sección 11): banda breve hacia la landing de Polar. */
+import Icon from "@/components/ui/Icon.astro";
+import type { Dictionary } from "@/i18n";
+import { site } from "@/lib/site";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+}
+
+const { t, number } = Astro.props;
+---
+
+<section aria-labelledby="polar-title" class="border-t border-ink/5 bg-bg-alt">
+  <div
+    class="mx-auto flex max-w-[1200px] flex-col gap-8 px-4 py-16 md:flex-row md:items-end md:justify-between md:px-6 md:py-20"
+    data-reveal
+  >
+    <div class="max-w-2xl">
+      <p class="eyebrow mb-4">
+        <span aria-hidden="true">{String(number).padStart(2, "0")} — </span>
+        {t.polarBand.eyebrow}
+      </p>
+      <h2 id="polar-title" class="text-subheading font-bold uppercase">
+        {t.polarBand.title}
+      </h2>
+      <p class="mt-4 leading-relaxed text-text-2">{t.polarBand.body}</p>
+    </div>
+    <a
+      href={site.polarUrl}
+      rel="noopener"
+      target="_blank"
+      class="group inline-flex min-h-12 shrink-0 items-center gap-3 border border-ink px-7 text-xs font-bold uppercase tracking-[0.2em] transition-colors duration-200 hover:bg-ink hover:text-ink-on"
+      data-track="cta_click"
+      data-track-id="polar"
+    >
+      {t.polarBand.cta}
+      <Icon
+        name="arrow-outward"
+        class="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+      />
+    </a>
+  </div>
+</section>

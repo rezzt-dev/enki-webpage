@@ -1,0 +1,87 @@
+---
+/**
+ * Formulario de aviso con HTML nativo. `site.ts` mejora el envío sin hidratar React en el hero;
+ * sin JavaScript conserva la validación del navegador y el POST directo a Buttondown.
+ */
+interface NotifyStrings {
+  label: string;
+  placeholder: string;
+  submit: string;
+  submitting: string;
+  success: string;
+  error: string;
+  invalid: string;
+  consent: string;
+  consentLink: string;
+  notConfigured: string;
+}
+
+interface Props {
+  t: NotifyStrings;
+  action: string | null;
+  privacyHref: string;
+  location: string;
+  title?: string;
+}
+
+const { t, action, privacyHref, location, title } = Astro.props;
+const id = `notify-${location}`;
+const [consentBefore, consentAfter] = t.consent.split("{link}");
+---
+
+<form
+  action={action ?? undefined}
+  method="post"
+  class="w-full max-w-xl"
+  aria-describedby={`${id}-consent`}
+  data-notify-form
+  data-location={location}
+  data-action={action ?? ""}
+  data-message-submitting={t.submitting}
+  data-message-success={t.success}
+  data-message-error={t.error}
+  data-message-invalid={t.invalid}
+  data-message-not-configured={t.notConfigured}
+>
+  {title && <p class="eyebrow mb-4">{title}</p>}
+  <label for={`${id}-email`} class="eyebrow mb-2 block">
+    {t.label}
+  </label>
+  <div class="flex flex-col gap-2 sm:flex-row sm:gap-0">
+    <input
+      id={`${id}-email`}
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      inputmode="email"
+      placeholder={t.placeholder}
+      aria-describedby={`${id}-status`}
+      class="min-h-12 flex-1 border border-ink/50 bg-input px-4 text-base text-text placeholder:text-text-2 hover:border-ink/60 focus:border-ink/70 aria-invalid:border-danger sm:border-r-0"
+    />
+    <input type="hidden" name="embed" value="1" />
+    <div aria-hidden="true" class="absolute left-[-9999px] h-px w-px overflow-hidden">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <button
+      type="submit"
+      class="min-h-12 shrink-0 bg-ink px-7 text-xs font-bold tracking-[0.2em] text-ink-on uppercase transition-colors duration-200 hover:bg-ink/85 active:translate-y-px active:bg-ink/75 disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      <span data-submit-label>{t.submit}</span>
+    </button>
+  </div>
+  <p
+    id={`${id}-status`}
+    role="status"
+    aria-live="polite"
+    class="mt-3 min-h-5 border-l-2 border-transparent pl-3 text-sm"
+    data-notify-status
+  ></p>
+  <p id={`${id}-consent`} class="mt-1 text-xs leading-relaxed text-text-2">
+    {consentBefore}
+    <a href={privacyHref} class="underline decoration-ink/40 underline-offset-2 hover:decoration-ink">
+      {t.consentLink}
+    </a>
+    {consentAfter}
+  </p>
+</form>

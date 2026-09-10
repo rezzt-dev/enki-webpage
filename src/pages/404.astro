@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Button from "@/components/ui/Button.astro";
+import { getDictionary } from "@/i18n";
+import { defaultLocale, pagePath } from "@/i18n/config";
+
+// Un único 404 estático (el servidor no sabe el idioma); en el idioma por defecto y fuera del índice.
+const t = getDictionary(defaultLocale);
+---
+
+<BaseLayout
+  locale={defaultLocale}
+  page="home"
+  title={`${t.notFound.title} — Enki`}
+  description={t.notFound.body}
+  noindex
+>
+  <section class="flex min-h-[80dvh] items-center pb-24 pt-36">
+    <div class="mx-auto max-w-[1200px] px-4 md:px-6">
+      <p class="eyebrow mb-6">404</p>
+      <h1 class="text-hero font-bold uppercase">{t.notFound.title}</h1>
+      <p class="mt-8 max-w-xl text-lg text-text-2">{t.notFound.body}</p>
+      <Button href={pagePath(defaultLocale, "home")} class="mt-10">
+        {t.notFound.back}
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

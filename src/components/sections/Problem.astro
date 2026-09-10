@@ -1,0 +1,69 @@
+---
+/** Problema (03 §2, sección 2): cinco apps sueltas que convergen en una sola ventana. Composición estática. */
+import Section from "@/components/ui/Section.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import Logo from "@/components/ui/Logo.astro";
+import Icon from "@/components/ui/Icon.astro";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+}
+
+const { t, number } = Astro.props;
+const icons = [
+  "description-outline",
+  "view-kanban-outline",
+  "calendar-month-outline",
+  "notifications-outline",
+  "folder-outline",
+];
+---
+
+<Section id="problem" alt labelledby="problem-title">
+  <SectionHeader
+    number={number}
+    eyebrow={t.problem.eyebrow}
+    title={t.problem.title}
+    titleId="problem-title"
+    lead={t.problem.lead}
+  />
+
+  <div aria-hidden="true">
+    <ul class="grid grid-cols-1 gap-px border border-dashed border-ink/20 bg-ink/10 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+      {t.problem.apps.map((app, i) => (
+        <li
+          class:list={[
+            "flex flex-col gap-6 bg-bg-alt p-5 text-ink/60 md:p-6",
+            i === 4 && "min-[360px]:col-span-2 sm:col-span-1",
+          ]}
+          data-reveal
+          style={`--reveal-index: ${i}`}
+        >
+          <div class="flex items-center justify-between">
+            <Icon name={icons[i] ?? "folder-outline"} class="size-5" />
+            <span class="font-mono text-[0.625rem] tracking-[0.2em]">APP {String(i + 1).padStart(2, "0")}</span>
+          </div>
+          <span class="text-sm font-bold uppercase tracking-[0.1em]">{app}</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex justify-center py-4 text-ink/40">
+      <span class="h-10 w-px bg-ink/30"></span>
+    </div>
+
+    <div
+      class="flex flex-col gap-6 bg-ink p-6 text-ink-on sm:flex-row sm:items-center sm:justify-between md:p-8"
+      data-reveal
+    >
+      <Logo />
+      <p class="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.2em]">{t.problem.apps.join(" · ")}</p>
+    </div>
+  </div>
+
+  <p class="mt-12 max-w-2xl text-xl leading-relaxed md:text-2xl" data-reveal>
+    {t.problem.resolution}
+  </p>
+</Section>

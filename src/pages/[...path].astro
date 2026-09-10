@@ -1,0 +1,79 @@
+---
+/**
+ * Única ruta del sitio: genera la home y las tres páginas legales en los seis idiomas (24 páginas) a
+ * partir de la tabla de src/i18n/config.ts, así los slugs traducidos no se repiten en varios ficheros.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Problem from "@/components/sections/Problem.astro";
+import Pillars from "@/components/sections/Pillars.astro";
+import Modules from "@/components/sections/Modules.astro";
+import Connections from "@/components/sections/Connections.astro";
+import HowItWorks from "@/components/sections/HowItWorks.astro";
+import Privacy from "@/components/sections/Privacy.astro";
+import Compare from "@/components/sections/Compare.astro";
+import UseCases from "@/components/sections/UseCases.astro";
+import DesktopDetails from "@/components/sections/DesktopDetails.astro";
+import Facts from "@/components/sections/Facts.astro";
+import PolarBand from "@/components/sections/PolarBand.astro";
+import Access from "@/components/sections/Access.astro";
+import Faq from "@/components/sections/Faq.astro";
+import FinalCta from "@/components/sections/FinalCta.astro";
+import LegalContent from "@/components/LegalContent.astro";
+import { allRoutes, type Locale, type PageId } from "@/i18n/config";
+import { getDictionary } from "@/i18n";
+import { homeJsonLd } from "@/lib/jsonld";
+
+export function getStaticPaths() {
+  return allRoutes().map(({ path, locale, page }) => ({ params: { path }, props: { locale, page } }));
+}
+
+interface Props {
+  locale: Locale;
+  page: PageId;
+}
+
+const { locale, page } = Astro.props;
+const t = getDictionary(locale);
+
+// Orden de 03 §2: qué es → ¿me pasa? → cómo lo resuelve → ¿me fío? → ¿cómo accedo? → dudas.
+const sections = [
+  Problem,
+  Pillars,
+  Modules,
+  Connections,
+  HowItWorks,
+  Privacy,
+  Compare,
+  UseCases,
+  DesktopDetails,
+  Facts,
+  PolarBand,
+  Access,
+  Faq,
+];
+
+const legal = page === "home" ? null : t.legal.pages[page];
+const title = legal ? `${legal.title} — Enki` : t.meta.title;
+const description = legal ? legal.description : t.meta.description;
+---
+
+<BaseLayout
+  locale={locale}
+  page={page}
+  title={title}
+  description={description}
+  jsonLd={page === "home" ? homeJsonLd(locale, t, Astro.site) : []}
+>
+  {page === "home" ? (
+    <>
+      <Hero t={t} locale={locale} />
+      {sections.map((Section, i) => (
+        <Section t={t} number={i + 1} locale={locale} />
+      ))}
+      <FinalCta t={t} />
+    </>
+  ) : (
+    <LegalContent t={t} locale={locale} page={page} />
+  )}
+</BaseLayout>

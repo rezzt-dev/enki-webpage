@@ -1,0 +1,14 @@
+---
+/** Indicador circular de estado; siempre debe acompañarse de una etiqueta textual. */
+interface Props {
+  pulse?: boolean;
+  class?: string;
+}
+
+const { pulse = true, class: className } = Astro.props;
+---
+
+<span
+  aria-hidden="true"
+  class:list={["size-2 shrink-0 rounded-full bg-success", pulse && "animate-pulse-ring", className]}
+></span>

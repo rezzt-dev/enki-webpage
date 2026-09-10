@@ -1,0 +1,11 @@
+packages:
+  - "."
+
+# No instalar versiones publicadas hace menos de 24 h: margen frente a paquetes comprometidos
+# (docs/roadmap/02-arquitectura-tecnica.md §3.10).
+minimumReleaseAge: 1440
+
+# Ningún paquete ejecuta scripts de instalación salvo los listados aquí con `true`.
+allowBuilds:
+  esbuild: true
+  sharp: true

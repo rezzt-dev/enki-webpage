@@ -1,0 +1,17 @@
+---
+/** Superficie de contenido con el borde y la interacción canónicos. */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<article
+  class:list={[
+    "border border-ink/10 bg-panel p-8 transition-[border-color,transform] duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:border-ink/30",
+    className,
+  ]}
+>
+  <slot />
+</article>

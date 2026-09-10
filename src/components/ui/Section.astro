@@ -1,0 +1,27 @@
+---
+/**
+ * Sección de la landing: fondo alterno ("zebra", docs/roadmap/03 §3), separador de 1px y contenedor
+ * estándar. `labelledby` apunta al h2 de la cabecera para que el landmark tenga nombre accesible.
+ */
+import Container from "./Container.astro";
+
+interface Props {
+  id?: string;
+  alt?: boolean;
+  labelledby?: string;
+  class?: string;
+  wide?: boolean;
+}
+
+const { id, alt = false, labelledby, class: className, wide = false } = Astro.props;
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={["border-t border-ink/5 py-20 md:py-32", alt ? "bg-bg-alt" : "bg-bg", className]}
+>
+  <Container {wide}>
+    <slot />
+  </Container>
+</section>

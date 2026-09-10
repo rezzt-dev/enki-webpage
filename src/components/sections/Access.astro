@@ -1,0 +1,58 @@
+---
+/**
+ * Acceso anticipado (D1-B: lista de espera en vez de descarga). Sustituye a la sección de descarga del
+ * roadmap mientras no haya binarios públicos (D2-C: se alojarán en hosting propio).
+ */
+import Section from "@/components/ui/Section.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import Icon from "@/components/ui/Icon.astro";
+import Badge from "@/components/ui/Badge.astro";
+import StatusDot from "@/components/ui/StatusDot.astro";
+import NotifyForm from "@/components/islands/NotifyForm.astro";
+import { pagePath, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n";
+import { notifyAction } from "@/lib/notify";
+import { site } from "@/lib/site";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+  locale: Locale;
+}
+
+const { t, number, locale } = Astro.props;
+---
+
+<Section id="access" labelledby="access-title">
+  <SectionHeader
+    number={number}
+    eyebrow={t.access.eyebrow}
+    title={t.access.title}
+    titleId="access-title"
+    lead={t.access.lead}
+  />
+
+  <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-5" data-reveal>
+      <p class="mb-5 flex items-center gap-3 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.2em]">
+        <StatusDot />
+        {t.access.status} · v{site.version}
+      </p>
+      <ul class="flex flex-col border-t border-ink/10">
+        {t.access.platforms.map((platform) => (
+          <li class="flex items-center justify-between gap-4 border-b border-ink/10 py-4">
+            <span class="flex items-center gap-3 font-bold uppercase tracking-[0.1em]">
+              <Icon name="desktop-windows-outline" class="size-5 text-ink/60" />
+              {platform}
+            </span>
+            <Badge>{t.access.soon}</Badge>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="border border-ink/10 bg-panel p-6 md:p-10 lg:col-span-7" data-reveal style="--reveal-index: 1">
+      <NotifyForm t={t.notify} action={notifyAction()} privacyHref={pagePath(locale, "privacy")} location="access" />
+    </div>
+  </div>
+</Section>

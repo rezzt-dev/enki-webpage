@@ -1,0 +1,129 @@
+---
+/**
+ * Conexiones (03 §2, sección 5): el diagrama de integraciones reales entre módulos
+ * (features-document.md §3.3). El diagrama es decorativo; la lista de la derecha lleva el contenido.
+ */
+import Section from "@/components/ui/Section.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+}
+
+const { t, number } = Astro.props;
+const n = t.connections.nodes;
+const W = 150;
+const H = 44;
+const nodes = [
+  { x: 20, y: 40, label: n.notes },
+  { x: 245, y: 40, label: n.kanban },
+  { x: 470, y: 40, label: n.polar },
+  { x: 20, y: 178, label: n.reminders },
+  { x: 245, y: 178, label: n.calendar, strong: true },
+  { x: 470, y: 178, label: n.today },
+];
+const edges = [
+  "M170 62H245", // notas ↔ kanban
+  "M320 84V178", // kanban → calendario
+  "M545 84V131H360V178", // polar → calendario
+  "M170 200H245", // recordatorios → calendario
+  "M395 200H470", // calendario → hoy
+];
+const trashEdges = ["M95 222V316", "M320 222V316"];
+---
+
+<Section id="connections" labelledby="connections-title">
+  <SectionHeader
+    number={number}
+    eyebrow={t.connections.eyebrow}
+    title={t.connections.title}
+    titleId="connections-title"
+    lead={t.connections.lead}
+  />
+
+  <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+    <div
+      class="hidden self-start border border-ink/10 bg-bg-alt p-6 md:block lg:col-span-7"
+      data-reveal
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 640 380" class="h-auto w-full font-mono text-ink">
+        <g fill="none" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5">
+          {edges.map((d) => (
+            <path d={d} />
+          ))}
+        </g>
+        <g fill="none" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.5" stroke-dasharray="4 5">
+          {trashEdges.map((d) => (
+            <path d={d} />
+          ))}
+        </g>
+        {nodes.map((node) => (
+          <g>
+            <rect
+              x={node.x}
+              y={node.y}
+              width={W}
+              height={H}
+              class:list={[node.strong ? "fill-ink" : "fill-bg"]}
+              stroke="currentColor"
+              stroke-opacity={node.strong ? 1 : 0.3}
+            />
+            <text
+              x={node.x + W / 2}
+              y={node.y + H / 2 + 4}
+              text-anchor="middle"
+              font-size="11"
+              font-weight="700"
+              letter-spacing="2"
+              class:list={[node.strong ? "fill-ink-on" : "fill-text"]}
+            >
+              {node.label.toUpperCase()}
+            </text>
+          </g>
+        ))}
+        <rect
+          x="20"
+          y="316"
+          width="375"
+          height={H}
+          class="fill-bg"
+          stroke="currentColor"
+          stroke-opacity="0.3"
+          stroke-dasharray="4 5"
+        />
+        <text
+          x="207"
+          y="342"
+          text-anchor="middle"
+          font-size="11"
+          font-weight="700"
+          letter-spacing="2"
+          class="fill-text"
+        >
+          {n.trash.toUpperCase()}
+        </text>
+      </svg>
+    </div>
+
+    <ol class="flex flex-col border-t border-ink/10 lg:col-span-5">
+      {t.connections.items.map((item, i) => (
+        <li
+          class="grid grid-cols-[auto_1fr] gap-x-5 border-b border-ink/10 py-6"
+          data-reveal
+          style={`--reveal-index: ${i}`}
+        >
+          <span class="pt-1 font-mono text-[0.6875rem] font-bold tracking-[0.2em] text-ink/60" aria-hidden="true">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <div>
+            <h3 class="font-bold uppercase tracking-[0.05em]">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-text-2">{item.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>

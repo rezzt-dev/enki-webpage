@@ -1,0 +1,40 @@
+---
+/** Hechos verificables (D9: sin testimonios ni logos inventados). Cifras de src/lib/site.ts. */
+import Section from "@/components/ui/Section.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import type { Dictionary } from "@/i18n";
+import type { Locale } from "@/i18n/config";
+import { site } from "@/lib/site";
+
+interface Props {
+  t: Dictionary;
+  number: number;
+  locale: Locale;
+}
+
+const { t, number, locale } = Astro.props;
+const values = [
+  String(site.languageCount),
+  String(site.platformCount),
+  String(site.requiredAccountCount),
+  `${new Intl.NumberFormat(locale).format(site.testCount)}+`,
+];
+---
+
+<Section id="facts" labelledby="facts-title">
+  <SectionHeader number={number} eyebrow={t.facts.eyebrow} title={t.facts.title} titleId="facts-title" />
+  <dl class="grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 lg:grid-cols-4">
+    {t.facts.items.map((fact, i) => (
+      <div
+        class="flex min-w-0 flex-col-reverse gap-3 bg-bg p-5 min-[360px]:p-7 md:p-10"
+        data-reveal
+        style={`--reveal-index: ${i}`}
+      >
+        <dt class="font-mono text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-ink/60 min-[360px]:tracking-[0.2em]">
+          {fact.label}
+        </dt>
+        <dd class="text-4xl font-bold tracking-tighter min-[360px]:text-5xl md:text-7xl">{values[i]}</dd>
+      </div>
+    ))}
+  </dl>
+</Section>

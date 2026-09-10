@@ -1,0 +1,100 @@
+---
+import "@/styles/global.css";
+import spaceGrotesk from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url";
+import jetbrainsMono from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url";
+import Seo from "@/components/layout/Seo.astro";
+import Header from "@/components/layout/Header.astro";
+import Footer from "@/components/layout/Footer.astro";
+import Grain from "@/components/ui/Grain.astro";
+import { localeMeta, type Locale, type PageId } from "@/i18n/config";
+import { getDictionary } from "@/i18n";
+
+interface Props {
+  locale: Locale;
+  page: PageId;
+  title: string;
+  description: string;
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+  seoPath?: string;
+}
+
+const { locale, page, title, description, jsonLd, noindex, seoPath } = Astro.props;
+const t = getDictionary(locale);
+
+// Umami (D7): requiere que el despliegue se declare producción. Un build de preview también tiene
+// `import.meta.env.PROD`, por eso esa señal por sí sola no basta para impedir la petición de red.
+const umami = {
+  src: import.meta.env.PUBLIC_UMAMI_SRC,
+  id: import.meta.env.PUBLIC_UMAMI_WEBSITE_ID,
+  domains: import.meta.env.PUBLIC_UMAMI_DOMAINS,
+};
+const loadAnalytics =
+  import.meta.env.PROD &&
+  import.meta.env.PUBLIC_DEPLOY_CONTEXT === "production" &&
+  Boolean(umami.src && umami.id && umami.domains);
+---
+
+<!doctype html>
+<html lang={localeMeta[locale].htmlLang} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#eaeaea" media="(prefers-color-scheme: light)" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href={spaceGrotesk} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={jetbrainsMono} as="font" type="font/woff2" crossorigin />
+
+    {/* Tema antes del primer pintado, sin destello. Oscuro salvo elección explícita guardada (D10). */}
+    <script is:inline>
+      (() => {
+        let theme = "dark";
+        try {
+          if (localStorage.getItem("enki-theme") === "light") theme = "light";
+        } catch {
+          // Almacenamiento bloqueado: se queda el tema oscuro por defecto.
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.add("js");
+      })();
+    </script>
+    <Seo
+      locale={locale}
+      page={page}
+      title={title}
+      description={description}
+      imageAlt={t.meta.ogAlt}
+      path={seoPath}
+      jsonLd={jsonLd}
+      noindex={noindex}
+    />
+
+    {loadAnalytics && (
+      <script is:inline defer src={umami.src} data-website-id={umami.id} data-domains={umami.domains}></script>
+    )}
+  </head>
+  <body class="min-h-dvh">
+    <a
+      href="#main"
+      class="fixed left-4 top-4 z-[100] -translate-y-24 bg-ink px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-ink-on focus:translate-y-0"
+    >
+      {t.a11y.skip}
+    </a>
+    <Grain />
+
+    <Header locale={locale} page={page} t={t} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} t={t} />
+
+    <script>
+      import "@/scripts/site";
+    </script>
+  </body>
+</html>

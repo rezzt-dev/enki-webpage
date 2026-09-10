@@ -1,0 +1,32 @@
+---
+/** CTA final (03 §2, sección 14): el lema otra vez y la acción, con el separador "línea — texto — línea". */
+import Button from "@/components/ui/Button.astro";
+import Logo from "@/components/ui/Logo.astro";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+---
+
+<section aria-labelledby="final-title" class="border-t border-ink/10 bg-bg">
+  <div class="mx-auto flex max-w-[1200px] flex-col items-center px-4 py-24 text-center md:px-6 md:py-36" data-reveal>
+    <div class="mb-10 flex items-center gap-4 text-ink/60" aria-hidden="true">
+      <span class="h-px w-10 bg-ink/20 md:w-16"></span>
+      <Logo wordmark={false} />
+      <span class="h-px w-10 bg-ink/20 md:w-16"></span>
+    </div>
+    <h2
+      id="final-title"
+      class="max-w-4xl text-section font-bold uppercase text-balance md:text-[clamp(2.5rem,6vw,5rem)]"
+    >
+      {t.finalCta.title}
+    </h2>
+    <p class="mt-6 max-w-xl text-lg leading-relaxed text-text-2">{t.finalCta.lead}</p>
+    <Button href="#access" class="mt-10" data-track="cta_click" data-track-id="final">
+      {t.finalCta.cta}
+    </Button>
+  </div>
+</section>

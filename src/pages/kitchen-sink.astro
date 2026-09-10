@@ -1,0 +1,90 @@
+---
+/**
+ * Muestrario interno de los componentes base (roadmap 06 §3.1). Está fuera del sitemap y lleva
+ * `noindex`; no contiene copy de producto ni forma parte de la navegación pública.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Badge from "@/components/ui/Badge.astro";
+import Button from "@/components/ui/Button.astro";
+import Card from "@/components/ui/Card.astro";
+import Container from "@/components/ui/Container.astro";
+import Eyebrow from "@/components/ui/Eyebrow.astro";
+import GridCell from "@/components/ui/GridCell.astro";
+import Kbd from "@/components/ui/Kbd.astro";
+import ScreenFrame from "@/components/ui/ScreenFrame.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import StatusDot from "@/components/ui/StatusDot.astro";
+import { getDictionary } from "@/i18n";
+
+const t = getDictionary("es");
+---
+
+<BaseLayout
+  locale="es"
+  page="home"
+  title="UI — Enki"
+  description="Muestrario interno del sistema de diseño de Enki."
+  noindex
+  seoPath="/kitchen-sink/"
+>
+  <section class="pb-24 pt-36 md:pt-44" aria-labelledby="kitchen-title">
+    <Container>
+      <Eyebrow>Desarrollo · UI</Eyebrow>
+      <h1 id="kitchen-title" class="mt-4 text-section font-bold uppercase">
+        Kitchen sink
+      </h1>
+
+      <div class="mt-16 space-y-20">
+        <section aria-labelledby="buttons-title">
+          <SectionHeader number={1} eyebrow="Componentes" title="Botones" titleId="buttons-title" />
+          <div class="flex flex-wrap items-center gap-5">
+            <Button>Primary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button disabled>Disabled</Button>
+          </div>
+        </section>
+
+        <section aria-labelledby="tokens-title">
+          <SectionHeader number={2} eyebrow="Componentes" title="Etiquetas y teclas" titleId="tokens-title" />
+          <div class="flex flex-wrap items-center gap-5">
+            <Badge>Alfa</Badge>
+            <Badge variant="solid">Activo</Badge>
+            <span class="flex items-center gap-3">
+              <StatusDot /> Estado disponible
+            </span>
+            <Kbd>Ctrl</Kbd>
+            <span aria-hidden="true">+</span>
+            <Kbd>P</Kbd>
+          </div>
+        </section>
+
+        <section aria-labelledby="surfaces-title">
+          <SectionHeader number={3} eyebrow="Componentes" title="Superficies" titleId="surfaces-title" />
+          <div class="grid gap-8 lg:grid-cols-2">
+            <Card>
+              <h3 class="text-subheading font-bold uppercase">Card</h3>
+              <p class="mt-3 text-text-2">Superficie con borde e interacción de puntero.</p>
+            </Card>
+            <div class="grid gap-px bg-ink/10">
+              <GridCell>
+                <h3 class="font-bold uppercase">Grid cell</h3>
+                <p class="mt-3 text-text-2">Celda de una rejilla separada por un píxel.</p>
+              </GridCell>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="screen-title">
+          <SectionHeader number={4} eyebrow="Componentes" title="Marco de captura" titleId="screen-title" />
+          <ScreenFrame
+            screen="dashboard"
+            alt={t.hero.screenAlt}
+            pendingLabel={t.a11y.placeholder}
+            sizes="(min-width: 1200px) 1152px, 100vw"
+          />
+        </section>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
