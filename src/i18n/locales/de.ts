@@ -419,7 +419,7 @@ export const de: Dictionary = {
           {
             title: "Betreiber",
             body: [
-              "Gemäß Artikel 10 des spanischen Gesetzes 34/2002 (LSSI-CE) gehört diese Website [[AUTOR: vollständiger Name]], Steuernummer [[AUTOR: NIF/NIE]], Zustellanschrift [[AUTOR: Anschrift]].",
+              "Gemäß Artikel 10 des spanischen Gesetzes 34/2002 (LSSI-CE) gehört diese Website {holder}, Steuernummer {taxId}, Zustellanschrift {address}.",
               "Kontakt: {email}.",
             ],
           },
@@ -449,7 +449,7 @@ export const de: Dictionary = {
         sections: [
           {
             title: "Verantwortlicher",
-            body: ["[[AUTOR: vollständiger Name]], Steuernummer [[AUTOR: NIF/NIE]]. Kontakt: {email}."],
+            body: ["{holder}, Steuernummer {taxId}. Kontakt: {email}."],
           },
           {
             title: "Welche Daten wir verarbeiten und warum",
@@ -461,7 +461,7 @@ export const de: Dictionary = {
           {
             title: "Auftragsverarbeiter",
             body: [
-              "Buttondown (Verwaltung der Benachrichtigungsliste) und [[AUTOR: Hosting-Anbieter]] (Hosting der Website und der Analyse).",
+              "Buttondown (Verwaltung der Benachrichtigungsliste) und {hosting} (Hosting der Website und der Analyse).",
             ],
           },
           {

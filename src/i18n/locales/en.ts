@@ -392,7 +392,7 @@ export const en: Dictionary = {
           {
             title: "Owner",
             body: [
-              "In accordance with article 10 of Spanish Law 34/2002 (LSSI-CE), this website belongs to [[AUTOR: full name]], tax ID [[AUTOR: NIF/NIE]], with an address for notices at [[AUTOR: address]].",
+              "In accordance with article 10 of Spanish Law 34/2002 (LSSI-CE), this website belongs to {holder}, tax ID {taxId}, with an address for notices at {address}.",
               "Contact: {email}.",
             ],
           },
@@ -420,7 +420,7 @@ export const en: Dictionary = {
         title: "Privacy policy",
         description: "How the Enki website handles your personal data.",
         sections: [
-          { title: "Controller", body: ["[[AUTOR: full name]], tax ID [[AUTOR: NIF/NIE]]. Contact: {email}."] },
+          { title: "Controller", body: ["{holder}, tax ID {taxId}. Contact: {email}."] },
           {
             title: "What data we process and why",
             body: [
@@ -431,7 +431,7 @@ export const en: Dictionary = {
           {
             title: "Processors",
             body: [
-              "Buttondown (waitlist management) and [[AUTOR: hosting provider]] (hosting of the website and the analytics).",
+              "Buttondown (waitlist management) and {hosting} (hosting of the website and the analytics).",
             ],
           },
           {

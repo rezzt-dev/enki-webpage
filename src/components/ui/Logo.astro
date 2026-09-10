@@ -15,5 +15,6 @@ const { class: className, wordmark = true } = Astro.props;
   <svg viewBox="316 217 390 589" class="h-5 w-auto" fill="currentColor" aria-hidden="true">
     <path d="M316 217H706V806H316V728H620V550H391V472H620V296H316Z"></path>
   </svg>
-  {wordmark && <span class="text-sm font-bold uppercase tracking-[0.3em]">Enki</span>}
+  {/* `-mr` compensa el tracking que queda tras la última letra y descentra el conjunto. */}
+  {wordmark && <span class="mr-[-0.3em] text-sm leading-none font-bold uppercase tracking-[0.3em]">Enki</span>}
 </span>

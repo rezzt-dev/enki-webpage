@@ -14,6 +14,42 @@ Formato y reglas / format and rules: [`AGENTS.md`](AGENTS.md).
 
 ## [SIN VERSIONAR] / UNRELEASED
 
+### COMPLETAR LOS DATOS LEGALES DEL TITULAR, EL COPYRIGHT DEL PIE Y ALINEAR LA CABECERA
+
+- **Fecha / Date:** 2026-09-10
+- **Commit:** `update | web: completar los datos legales del titular, el copyright del pie y alinear la cabecera`
+- **Tipo / Type:** update
+
+**ES**
+
+- El aviso legal y la politica de privacidad ya muestran los datos del
+  titular: nombre completo, NIF y domicilio a efectos de notificaciones
+  (Calzada de Calatrava, Ciudad Real, España), como exige la LSSI-CE.
+- La politica de privacidad indica que la web y la analitica se alojan en
+  site.es, con un enlace a su pagina.
+- Las paginas legales dejan de mostrar el aviso de "borrador" porque ya no
+  queda ningun dato pendiente, en ningun idioma.
+- El pie de pagina muestra ahora el copyright como
+  "© 2026 REZZT.DEV / JUAN GARCÍA CAZALLAS. Todos los derechos reservados."
+- La cabecera alinea a la misma altura el logo, los enlaces del menu, el
+  selector de idioma, el boton de tema y el boton de acceso anticipado, y el
+  logotipo "Enki" queda bien centrado.
+
+**EN**
+
+- The legal notice and the privacy policy now show the owner's details: full
+  name, tax ID (NIF) and address for notices (Calzada de Calatrava, Ciudad
+  Real, Spain), as required by Spanish law LSSI-CE.
+- The privacy policy states that the website and the analytics are hosted by
+  site.es, with a link to its page.
+- The legal pages no longer show the "draft" warning, since no details are
+  pending in any language.
+- The footer now shows the copyright as
+  "© 2026 REZZT.DEV / JUAN GARCÍA CAZALLAS. All rights reserved."
+- The header lines up the logo, menu links, language switcher, theme button
+  and early-access button at the same height, and the "Enki" wordmark is
+  properly centred.
+
 ### AÑADIR SUITE DE PRUEBAS E2E Y QA CON PLAYWRIGHT, CI Y CORRECCIONES DE ACCESIBILIDAD
 
 - **Fecha / Date:** 2026-09-10

@@ -437,7 +437,7 @@ export const fr: Dictionary = {
           {
             title: "Éditeur",
             body: [
-              "Conformément à l’article 10 de la loi espagnole 34/2002 (LSSI-CE), ce site appartient à [[AUTOR: nom complet]], numéro fiscal [[AUTOR: NIF/NIE]], domicilié aux fins de notification à [[AUTOR: adresse]].",
+              "Conformément à l’article 10 de la loi espagnole 34/2002 (LSSI-CE), ce site appartient à {holder}, numéro fiscal {taxId}, domicilié aux fins de notification à {address}.",
               "Contact : {email}.",
             ],
           },
@@ -467,7 +467,7 @@ export const fr: Dictionary = {
         sections: [
           {
             title: "Responsable du traitement",
-            body: ["[[AUTOR: nom complet]], numéro fiscal [[AUTOR: NIF/NIE]]. Contact : {email}."],
+            body: ["{holder}, numéro fiscal {taxId}. Contact : {email}."],
           },
           {
             title: "Données traitées et finalités",
@@ -479,7 +479,7 @@ export const fr: Dictionary = {
           {
             title: "Sous-traitants",
             body: [
-              "Buttondown (gestion de la liste d’attente) et [[AUTOR: hébergeur]] (hébergement du site et de la mesure d’audience).",
+              "Buttondown (gestion de la liste d’attente) et {hosting} (hébergement du site et de la mesure d’audience).",
             ],
           },
           {

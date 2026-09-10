@@ -33,32 +33,32 @@ const cta = `${home}#access`;
     data-header
     class="mx-auto flex max-w-[1350px] items-center justify-between gap-4 border border-ink/10 bg-bg/70 px-4 py-2.5 backdrop-blur-md transition-[border-color,box-shadow] duration-300 data-scrolled:border-ink/20 data-scrolled:shadow-lg data-scrolled:shadow-black/20"
   >
-    <a href={home} aria-label={t.a11y.home} class="py-1.5 transition-opacity duration-200 hover:opacity-70">
+    <a href={home} aria-label={t.a11y.home} class="flex h-9 shrink-0 items-center transition-opacity duration-200 hover:opacity-70">
       <Logo />
     </a>
 
     <nav aria-label={t.a11y.mainNav} class="hidden lg:block">
       <ul class="flex items-center gap-8">
         {links.map((link) => (
-          <li>
+          <li class="flex">
             <a
               href={link.href}
-              class="group relative py-1 text-xs font-bold uppercase tracking-[0.2em] text-text-2 transition-colors duration-200 hover:text-text"
+              class="group relative flex h-9 items-center text-xs font-bold uppercase tracking-[0.2em] text-text-2 transition-colors duration-200 hover:text-text"
             >
               {link.label}
-              <span class="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 ease-out-soft group-hover:scale-x-100" />
+              <span class="absolute inset-x-0 bottom-1.5 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 ease-out-soft group-hover:scale-x-100" />
             </a>
           </li>
         ))}
       </ul>
     </nav>
 
-    <div class="flex items-center gap-2">
+    <div class="flex h-9 items-center gap-2">
       <LangSwitch locale={locale} page={page} label={t.a11y.language} />
       <ThemeToggle labelLight={t.a11y.themeLight} labelDark={t.a11y.themeDark} />
       {/* El envoltorio controla la visibilidad: Button ya lleva `inline-flex`, que ganaría a `hidden`. */}
-      <div class="hidden sm:block">
-        <Button href={cta} size="sm" variant="outline" data-track="cta_click" data-track-id="header">
+      <div class="hidden sm:flex">
+        <Button href={cta} size="sm" variant="outline" class="h-9" data-track="cta_click" data-track-id="header">
           {t.nav.cta}
         </Button>
       </div>

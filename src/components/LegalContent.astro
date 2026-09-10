@@ -20,12 +20,18 @@ const content = t.legal.pages[page];
 const escapeHtml = (text: string) =>
   text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/** Texto → HTML seguro: escapa todo y solo inserta el enlace de contacto y el resaltado de huecos. */
+const linkClass = "text-text underline decoration-ink/40 underline-offset-2";
+
+/** Texto → HTML seguro: escapa todo y solo inserta los datos del titular, los enlaces y el resaltado de huecos. */
 const render = (text: string) =>
   escapeHtml(text)
-    .replace(
-      "{email}",
-      `<a href="mailto:${site.supportEmail}" class="text-text underline decoration-ink/40 underline-offset-2">${site.supportEmail}</a>`,
+    .replaceAll("{email}", `<a href="mailto:${site.supportEmail}" class="${linkClass}">${site.supportEmail}</a>`)
+    .replaceAll("{holder}", escapeHtml(site.legal.holderName))
+    .replaceAll("{taxId}", escapeHtml(site.legal.taxId))
+    .replaceAll("{address}", escapeHtml(site.legal.address))
+    .replaceAll(
+      "{hosting}",
+      `<a href="${site.legal.hostingUrl}" class="${linkClass}" rel="noopener" target="_blank">${escapeHtml(site.legal.hostingName)}</a>`,
     )
     .replace(/\[\[AUTOR: ([^\]]+)\]\]/g, '<mark class="bg-highlight/25 px-1 font-mono text-sm text-text">$1</mark>');
 

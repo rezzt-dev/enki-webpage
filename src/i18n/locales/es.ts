@@ -419,7 +419,7 @@ export const es = {
           {
             title: "Titular",
             body: [
-              "En cumplimiento del artículo 10 de la Ley 34/2002 (LSSI-CE), se informa de que este sitio web pertenece a [[AUTOR: nombre completo]], con NIF [[AUTOR: NIF/NIE]] y domicilio a efectos de notificaciones en [[AUTOR: domicilio]].",
+              "En cumplimiento del artículo 10 de la Ley 34/2002 (LSSI-CE), se informa de que este sitio web pertenece a {holder}, con NIF {taxId} y domicilio a efectos de notificaciones en {address}.",
               "Contacto: {email}.",
             ],
           },
@@ -449,7 +449,7 @@ export const es = {
         sections: [
           {
             title: "Responsable",
-            body: ["[[AUTOR: nombre completo]], con NIF [[AUTOR: NIF/NIE]]. Contacto: {email}."],
+            body: ["{holder}, con NIF {taxId}. Contacto: {email}."],
           },
           {
             title: "Qué datos tratamos y para qué",
@@ -461,7 +461,7 @@ export const es = {
           {
             title: "Encargados del tratamiento",
             body: [
-              "Buttondown (gestión de la lista de avisos) y [[AUTOR: proveedor de alojamiento]] (alojamiento del sitio y de la analítica).",
+              "Buttondown (gestión de la lista de avisos) y {hosting} (alojamiento del sitio y de la analítica).",
             ],
           },
           {
