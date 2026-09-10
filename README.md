@@ -68,6 +68,15 @@ No se añaden UTM a enlaces internos ni se incluyen emails, nombres u otros dato
 parámetro. Antes de publicar una campaña se registra su combinación en el documento o issue de campaña
 para no fragmentar métricas con variantes ortográficas.
 
+## Licencia
+
+Software propietario. Todos los derechos reservados a rezzt.dev. Ver [`LICENSE`](LICENSE) (texto en
+castellano e inglés). No se concede ningún permiso de uso, copia, modificación o distribución sin
+autorización previa por escrito.
+
 ## Commits
 
-Estilo del repo: `update | web: …`, `fix | web: …`.
+Estilo del repo: `update | web: …`, `fix | web: …`. Las reglas completas (prefijos, cuerpo y la
+obligación de añadir una sección a [`changelog.md`](changelog.md) en cada commit) están en
+[`AGENTS.md`](AGENTS.md) / [`CLAUDE.md`](CLAUDE.md), que existen solo para generar commits más
+completos pensados para usuarios y desarrolladores con experiencia.
