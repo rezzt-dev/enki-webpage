@@ -5,13 +5,15 @@ import SectionHeader from "@/components/ui/SectionHeader.astro";
 import ScreenFrame from "@/components/ui/ScreenFrame.astro";
 import ModulesTabs from "@/components/islands/ModulesTabs";
 import type { Dictionary } from "@/i18n";
+import type { Locale } from "@/i18n/config";
 
 interface Props {
   t: Dictionary;
   number: number;
+  locale: Locale;
 }
 
-const { t, number } = Astro.props;
+const { t, number, locale } = Astro.props;
 const items = t.modules.items.map(({ id, label, title, body, points }) => ({ id, label, title, body, points }));
 const alts = Object.fromEntries(t.modules.items.map((item) => [item.id, item.screenAlt]));
 const pending = t.a11y.placeholder;
@@ -29,18 +31,18 @@ const sizes = "(min-width: 1024px) 60vw, 100vw";
   <div data-reveal>
     {/* Slots con nombre estáticos: Astro no admite `slot={variable}` dentro de un map. */}
     <ModulesTabs client:visible items={items} ariaLabel={t.modules.title}>
-      <ScreenFrame slot="notes" screen="notes" alt={alts.notes ?? ""} pendingLabel={pending} sizes={sizes} />
-      <ScreenFrame slot="kanban" screen="kanban" alt={alts.kanban ?? ""} pendingLabel={pending} sizes={sizes} />
-      <ScreenFrame slot="calendar" screen="calendar" alt={alts.calendar ?? ""} pendingLabel={pending} sizes={sizes} />
+      <ScreenFrame slot="notes" screen="notes" alt={alts.notes ?? ""} locale={locale} pendingLabel={pending} sizes={sizes} />
+      <ScreenFrame slot="kanban" screen="kanban" alt={alts.kanban ?? ""} locale={locale} pendingLabel={pending} sizes={sizes} />
+      <ScreenFrame slot="calendar" screen="calendar" alt={alts.calendar ?? ""} locale={locale} pendingLabel={pending} sizes={sizes} />
       <ScreenFrame
         slot="reminders"
         screen="reminders"
         alt={alts.reminders ?? ""}
-        pendingLabel={pending}
+        locale={locale} pendingLabel={pending}
         sizes={sizes}
       />
-      <ScreenFrame slot="sessions" screen="sessions" alt={alts.sessions ?? ""} pendingLabel={pending} sizes={sizes} />
-      <ScreenFrame slot="polar" screen="polar" alt={alts.polar ?? ""} pendingLabel={pending} sizes={sizes} />
+      <ScreenFrame slot="sessions" screen="sessions" alt={alts.sessions ?? ""} locale={locale} pendingLabel={pending} sizes={sizes} />
+      <ScreenFrame slot="polar" screen="polar" alt={alts.polar ?? ""} locale={locale} pendingLabel={pending} sizes={sizes} />
     </ModulesTabs>
   </div>
 </Section>

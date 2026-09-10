@@ -2,15 +2,21 @@
 /**
  * Marco de captura ("passe-partout" de my-web) con la única sombra que permite el sistema.
  *
+ * Pinta la captura del idioma de la página en sus dos temas; el CSS global (`[data-screen-theme]`)
+ * oculta la que no coincide con `data-theme`. La oculta, al ser lazy, no se descarga hasta que se cambia
+ * de tema.
+ *
  * Si la captura del registro (`src/lib/screens.ts`) todavía no tiene imagen, pinta un esquema de la
  * pantalla de la app con su proporción definitiva: sirve para ver la organización de la página y
  * garantiza que la maqueta no se mueva cuando llegue la imagen real.
  */
 import { Picture } from "astro:assets";
-import { screens, type ScreenId } from "@/lib/screens";
+import { screens, screenSrc, type ScreenId, type ScreenTheme } from "@/lib/screens";
+import type { Locale } from "@/i18n/config";
 
 interface Props {
   screen: ScreenId;
+  locale: Locale;
   alt: string;
   pendingLabel: string;
   /** Solo para la captura del hero (LCP): sin lazy y con prioridad alta. */
@@ -21,6 +27,7 @@ interface Props {
 
 const {
   screen,
+  locale,
   alt,
   pendingLabel,
   priority = false,
@@ -30,6 +37,12 @@ const {
 const data = screens[screen];
 const isPhone = data.kind === "phone";
 const bars = [72, 48, 60, 36, 54];
+// El oscuro es el tema por defecto: solo él lleva prioridad en el hero.
+const themes: ScreenTheme[] = ["dark", "light"];
+const sources = themes.flatMap((theme) => {
+  const src = screenSrc(screen, locale, theme);
+  return src ? [{ theme, src }] : [];
+});
 ---
 
 <figure
@@ -39,16 +52,55 @@ const bars = [72, 48, 60, 36, 54];
     className,
   ]}
 >
-  {data.src ? (
-    <Picture
-      src={data.src}
-      alt={alt}
-      formats={["avif", "webp"]}
-      sizes={sizes}
-      loading={priority ? "eager" : "lazy"}
-      fetchpriority={priority ? "high" : "auto"}
-      class="block h-auto w-full"
-    />
+  {sources.length ? (
+    sources.map(({ theme, src }) => {
+      const eager = priority && theme === "dark";
+      return (
+        <div
+          data-screen-stage
+          data-screen-theme={theme}
+          class="relative overflow-hidden bg-bg"
+          style={`aspect-ratio: ${src.width} / ${src.height}`}
+        >
+          {/* Espera animada: esqueleto de la app con barrido de luz y barra de progreso; se desvanece al cargar. */}
+          <div data-screen-loader aria-hidden="true" class="absolute inset-0 flex">
+            <div class="flex w-[17%] flex-col gap-[6%] border-r border-ink/10 bg-ink/[0.03] p-[2.5%]">
+              <div class="screen-loader-block h-[5%] w-1/2 bg-ink/30" />
+              {bars.map((w, i) => (
+                <div class="flex items-center gap-[10%]">
+                  <span class="screen-loader-block aspect-square w-[14%] bg-ink/20" style={`--i: ${i}`} />
+                  <span class="screen-loader-block h-1 bg-ink/15" style={`width: ${w}%; --i: ${i}`} />
+                </div>
+              ))}
+            </div>
+            <div class="grid flex-1 grid-cols-3 grid-rows-[auto_1fr_2fr] gap-[2%] p-[3%]">
+              <div class="col-span-3 flex items-center justify-between border-b border-ink/10 pb-[1.5%]">
+                <span class="screen-loader-block h-2 w-1/4 bg-ink/25" />
+                <span class="screen-loader-block h-2 w-[12%] border border-ink/20" style="--i: 2" />
+              </div>
+              {[0, 1, 2].map((i) => (
+                <div class="screen-loader-block border border-ink/10 bg-ink/[0.05]" style={`--i: ${i + 1}`} />
+              ))}
+              <div class="screen-loader-block col-span-2 border border-ink/10 bg-ink/[0.05]" style="--i: 4" />
+              <div class="screen-loader-block border border-ink/10 bg-ink/[0.05]" style="--i: 5" />
+            </div>
+            <div class="absolute inset-x-0 bottom-0 h-0.5 overflow-hidden bg-ink/10">
+              <span class="screen-loader-progress block h-full w-2/5 bg-ink/60" />
+            </div>
+          </div>
+          <Picture
+            src={src}
+            alt={alt}
+            formats={["avif", "webp"]}
+            fallbackFormat="webp"
+            sizes={sizes}
+            loading={eager ? "eager" : "lazy"}
+            fetchpriority={eager ? "high" : "auto"}
+            class="screen-img relative block h-auto w-full"
+          />
+        </div>
+      );
+    })
   ) : (
     <div
       role="img"

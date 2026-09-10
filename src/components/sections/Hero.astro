@@ -69,6 +69,7 @@ const { t, locale } = Astro.props;
     <div class="mt-14 md:mt-20" data-reveal style="--reveal-index: 5">
       <ScreenFrame
         screen="dashboard"
+        locale={locale}
         alt={t.hero.screenAlt}
         pendingLabel={t.a11y.placeholder}
         priority

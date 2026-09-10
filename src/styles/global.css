@@ -146,6 +146,85 @@
   --grain-opacity: 0.05;
 }
 
+/* Capturas de la app: solo se ve la del tema activo (ScreenFrame pinta ambas). */
+:root:not([data-theme="light"]) [data-screen-theme="light"],
+:root[data-theme="light"] [data-screen-theme="dark"] {
+  display: none;
+}
+
+/* Espera de las capturas: el esqueleto late y un barrido de luz lo recorre hasta que la imagen carga
+ * (BaseLayout marca `data-loaded` en el escenario); entonces la imagen aparece y el esqueleto se va.
+ * Sin JS no hay esqueleto y la imagen se ve tal cual; con movimiento reducido las animaciones se paran. */
+[data-screen-loader] {
+  transition:
+    opacity 500ms var(--ease-out-soft),
+    visibility 0s linear 500ms;
+}
+[data-screen-loader]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 35%,
+    color-mix(in oklab, var(--ink) 7%, transparent) 50%,
+    transparent 65%
+  );
+  background-size: 250% 100%;
+  animation: screen-shimmer 1.8s linear infinite;
+}
+.screen-loader-block {
+  animation: screen-pulse 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 120ms);
+}
+.screen-loader-progress {
+  animation: screen-progress 1.4s var(--ease-out-soft) infinite;
+}
+.screen-img {
+  transition:
+    opacity 700ms var(--ease-out-soft),
+    filter 700ms var(--ease-out-soft),
+    transform 900ms var(--ease-out-soft);
+}
+.js [data-screen-stage]:not([data-loaded]) .screen-img {
+  opacity: 0;
+  filter: blur(8px);
+  transform: scale(1.015);
+}
+[data-screen-stage][data-loaded] [data-screen-loader] {
+  opacity: 0;
+  visibility: hidden;
+}
+html:not(.js) [data-screen-loader] {
+  display: none;
+}
+
+@keyframes screen-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+@keyframes screen-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes screen-progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
 @layer base {
   html {
     scroll-padding-top: 6rem;

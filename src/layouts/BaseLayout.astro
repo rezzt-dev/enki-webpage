@@ -61,6 +61,15 @@ const loadAnalytics =
         }
         document.documentElement.dataset.theme = theme;
         document.documentElement.classList.add("js");
+        // Capturas: `load` no burbujea, así que se escucha en captura desde el <head>, antes de que
+        // ninguna imagen termine. También vale para las que React recrea al hidratar las pestañas. Un
+        // error cuenta como carga para no dejar el esqueleto animándose para siempre.
+        const markLoaded = (event) => {
+          const stage = event.target instanceof HTMLImageElement && event.target.closest("[data-screen-stage]");
+          if (stage) stage.setAttribute("data-loaded", "");
+        };
+        document.addEventListener("load", markLoaded, true);
+        document.addEventListener("error", markLoaded, true);
       })();
     </script>
     {/* Sin JS no hay cambio de tema ni menú móvil: se ocultan sus botones (la cabecera muestra el CTA). */}

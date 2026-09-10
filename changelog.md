@@ -14,6 +14,40 @@ Formato y reglas / format and rules: [`AGENTS.md`](AGENTS.md).
 
 ## [SIN VERSIONAR] / UNRELEASED
 
+### AÑADIR LAS CAPTURAS REALES DE LA APP POR IDIOMA Y TEMA CON ANIMACION DE CARGA
+
+- **Fecha / Date:** 2026-09-10
+- **Commit:** `update | web: añadir las capturas reales de la app por idioma y tema con animacion de carga`
+- **Tipo / Type:** update
+
+**ES**
+
+- La portada y la seccion de modulos muestran ya capturas reales de Enki en
+  lugar de los esquemas provisionales: panel, calendario, kanban, notas,
+  recordatorios y sesiones.
+- Cada captura aparece en el idioma de la pagina (español, español de
+  Latinoamerica, ingles, ingles britanico, frances y aleman) y cambia al
+  instante con el tema claro u oscuro. La del tema que no se ve no se
+  descarga hasta que se cambia de tema.
+- Mientras la imagen carga se ve un esqueleto animado de la app con una barra
+  de progreso, y la captura aparece con un fundido suave. Sin JavaScript la
+  imagen se ve directamente, y con movimiento reducido no hay animaciones.
+- La captura del modulo Polar sigue siendo un esquema hasta que tenga imagen.
+
+**EN**
+
+- The home page and the modules section now show real Enki screenshots
+  instead of the placeholder sketches: dashboard, calendar, kanban, notes,
+  reminders and sessions.
+- Each screenshot is shown in the page language (Spanish, Latin American
+  Spanish, English, British English, French and German) and switches
+  instantly with the light or dark theme. The one for the hidden theme is
+  not downloaded until the theme is changed.
+- While the image loads, an animated skeleton of the app with a progress bar
+  is shown, and the screenshot fades in smoothly. Without JavaScript the
+  image appears directly, and with reduced motion there are no animations.
+- The Polar module screenshot remains a sketch until it has an image.
+
 ### COMPLETAR LOS DATOS LEGALES DEL TITULAR, EL COPYRIGHT DEL PIE Y ALINEAR LA CABECERA
 
 - **Fecha / Date:** 2026-09-10
