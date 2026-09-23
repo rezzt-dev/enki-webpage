@@ -120,7 +120,7 @@ para no fragmentar métricas con variantes ortográficas.
 
 ## Licencia
 
-Software propietario. Todos los derechos reservados a rezzt.dev. Ver [`LICENSE`](LICENSE) (texto en
+Software propietario. Todos los derechos reservados a rezzt.dev. Ver [`LICENSE.md`](LICENSE.md) (texto en
 castellano e inglés). No se concede ningún permiso de uso, copia, modificación o distribución sin
 autorización previa por escrito.
 
