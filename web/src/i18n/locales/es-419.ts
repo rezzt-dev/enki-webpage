@@ -23,16 +23,10 @@ export const esOverrides: DeepPartial<Dictionary> = {
   polarBand: { title: "¿Y en el celular? Polar." },
   faq: {
     items: [
-      {
-        a: "Enki está en fase alfa y aún no tiene fecha de publicación cerrada. Si te inscribes en la lista, te avisaremos por email en cuanto haya una versión pública.",
-      },
+      undefined,
       {
         a: "No. Enki funciona sin registro. Solo necesitas una cuenta si decides vincular Polar para sincronizar tareas con el celular.",
       },
     ],
-  },
-  finalCta: {
-    lead: "Inscríbete en la lista y te avisamos cuando puedas descargarlo.",
-    cta: "Inscribirme",
   },
 };

@@ -4,8 +4,9 @@ import { release } from "./release";
 import { site } from "./site";
 
 /**
- * Datos estructurados de la home (docs/roadmap/05 §3.4). Sin `offers`, `downloadUrl`, `license` ni
- * `aggregateRating`: D1/D2/D3 aún no han publicado esos datos y no se inventan.
+ * Datos estructurados de la home (docs/roadmap/05 §3.4). `downloadUrl` y `releaseNotes` apuntan a la
+ * release de GitHub (`release.ts`). Sin `offers`, `license` ni `aggregateRating`: D3 aún no ha publicado
+ * esos datos y no se inventan.
  */
 export function homeJsonLd(locale: Locale, t: Dictionary, baseUrl: URL = new URL(site.url)): Record<string, unknown>[] {
   const inLanguage = localeMeta[locale].htmlLang;
@@ -26,6 +27,8 @@ export function homeJsonLd(locale: Locale, t: Dictionary, baseUrl: URL = new URL
       applicationCategory: "ProductivityApplication",
       operatingSystem: "Windows, macOS, Linux",
       softwareVersion: release.version,
+      downloadUrl: release.url,
+      releaseNotes: release.url,
       image,
       inLanguage,
       url,
@@ -47,7 +50,10 @@ export function homeJsonLd(locale: Locale, t: Dictionary, baseUrl: URL = new URL
       mainEntity: t.faq.items.map((item) => ({
         "@type": "Question",
         name: item.q,
-        acceptedAnswer: { "@type": "Answer", text: fill(item.a, { email: site.supportEmail }) },
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: fill(item.a, { email: site.supportEmail, version: release.version }),
+        },
       })),
     },
   ];

@@ -6,7 +6,7 @@
 import Section from "@/components/ui/Section.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 import Icon from "@/components/ui/Icon.astro";
-import type { Dictionary } from "@/i18n";
+import { fill, type Dictionary } from "@/i18n";
 import { site } from "@/lib/site";
 
 interface Props {
@@ -21,7 +21,7 @@ const { t, number } = Astro.props;
   <SectionHeader number={number} eyebrow={t.faq.eyebrow} title={t.faq.title} titleId="faq-title" />
   <div class="border-t border-ink/10" data-reveal>
     {t.faq.items.map((item, i) => {
-      const [before, after] = item.a.split("{email}");
+      const [before, after] = fill(item.a, { version: site.version }).split("{email}");
       return (
         <details class="faq-item group border-b border-ink/10" data-faq-id={String(i + 1)}>
           <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-6 transition-opacity duration-200 hover:opacity-70 [&::-webkit-details-marker]:hidden">

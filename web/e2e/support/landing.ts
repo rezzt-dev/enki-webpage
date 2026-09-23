@@ -51,7 +51,7 @@ export class Landing {
       .getByRole("link", { name: new RegExp(`^${escapeRegExp(localeMeta[locale].label)}`) });
   }
 
-  notifyForm(location: "hero" | "access") {
+  notifyForm(location: "access") {
     return this.page.locator(`form[data-location="${location}"]`);
   }
 

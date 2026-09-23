@@ -24,7 +24,7 @@ async function setup(page: Page, respond?: (route: Route) => Promise<void>) {
 
   const landing = new Landing(page);
   await landing.goto();
-  const form = landing.notifyForm("hero");
+  const form = landing.notifyForm("access");
   return {
     sent,
     landing,
@@ -159,16 +159,14 @@ test.describe("Formulario «avísame»", () => {
       const landing = new Landing(page);
       await landing.goto();
 
-      for (const location of ["hero", "access"] as const) {
-        const form = landing.notifyForm(location);
-        await expect(form).toHaveAttribute("action", notifyEndpoint);
-        await expect(form).toHaveAttribute("method", "post");
-        await expect(form).not.toHaveAttribute("novalidate");
-        const email = form.getByLabel(landing.t.notify.label);
-        await expect(email).toHaveAttribute("type", "email");
-        await expect(email).toHaveAttribute("required", "");
-        await expect(email).toHaveAttribute("autocomplete", "email");
-      }
+      const form = landing.notifyForm("access");
+      await expect(form).toHaveAttribute("action", notifyEndpoint);
+      await expect(form).toHaveAttribute("method", "post");
+      await expect(form).not.toHaveAttribute("novalidate");
+      const email = form.getByLabel(landing.t.notify.label);
+      await expect(email).toHaveAttribute("type", "email");
+      await expect(email).toHaveAttribute("required", "");
+      await expect(email).toHaveAttribute("autocomplete", "email");
     });
   });
 });

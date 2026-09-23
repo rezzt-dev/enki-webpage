@@ -19,12 +19,13 @@ export const de: Dictionary = {
     home: "Enki, Startseite",
     placeholder: "Screenshot folgt",
   },
-  nav: { modules: "Funktionen", privacy: "Datenschutz", compare: "Vergleich", faq: "FAQ", cta: "Früher Zugang" },
+  nav: { modules: "Funktionen", privacy: "Datenschutz", compare: "Vergleich", faq: "FAQ", cta: "Herunterladen" },
   hero: {
-    eyebrow: "Alpha 0.1 · Windows · macOS · Linux",
+    eyebrow: "Beta 0.2 · Windows · macOS · Linux",
     titleLines: ["Dein zweites Gehirn,", "auf deinem Desktop."],
     lead: "Notizen, Aufgaben, Kalender und Erinnerungen in einem einzigen Fenster. Nichts wird zusammengezwungen: Alles behält seinen Platz, und du entscheidest, wie es sich verbindet.",
-    formTitle: "Sag mir Bescheid, wenn ich es herunterladen kann",
+    downloadTitle: "Jetzt verfügbar",
+    downloadCta: "Enki herunterladen",
     secondary: "So funktioniert’s",
     facts: ["Kein Konto", "Funktioniert offline", "Deine Notizen sind Markdown-Dateien"],
     screenAlt: "Enkis Startseite mit den heutigen Aufgaben, den letzten Notizen und dem Kanban-Board.",
@@ -343,20 +344,25 @@ export const de: Dictionary = {
     cta: "Polar entdecken",
   },
   access: {
-    eyebrow: "Früher Zugang",
-    title: "Enki ist in der Alpha.",
-    lead: "Es ist schon alltagstauglich, aber noch gibt es keine öffentliche Version zum Herunterladen. Hinterlass deine E-Mail, und wir sagen dir Bescheid, sobald es so weit ist.",
-    status: "In Entwicklung",
-    soon: "Demnächst",
-    platforms: ["Windows", "macOS", "Linux"],
+    eyebrow: "Downloads",
+    title: "Enki ist in der Beta.",
+    lead: "Du kannst Enki jetzt für Windows, macOS und Linux herunterladen. Es ist eine Beta: alltagstauglich, aber noch nicht fehlerfrei. Wenn du einen Fehler findest, schreib uns.",
+    status: "Öffentliche Beta",
+    download: "Herunterladen",
+    downloadLabel: "Enki {version} für {os} {arch} herunterladen",
+    releaseNotes: "Versionshinweise auf GitHub",
+    unsigned:
+      "Die Builds sind noch nicht von Microsoft oder Apple signiert: Beim ersten Öffnen von Enki fragt dein System eventuell nach, ob du es wirklich ausführen willst.",
+    checksums: "SHA-256-Prüfsummen",
+    notifyTitle: "Über neue Versionen informieren",
   },
   faq: {
     eyebrow: "FAQ",
     title: "Häufige Fragen.",
     items: [
       {
-        q: "Wann kann ich Enki herunterladen?",
-        a: "Enki ist in der Alpha und hat noch keinen Veröffentlichungstermin. Trag dich in die Liste ein, und wir schreiben dir, sobald es eine öffentliche Version gibt.",
+        q: "Wo kann ich Enki herunterladen?",
+        a: "Im Download-Bereich dieser Seite oder auf der Release-Seite auf GitHub. Die aktuelle Version ist die Beta {version} für Windows, macOS (Apple Silicon und Intel) und Linux.",
       },
       {
         q: "Brauche ich ein Konto?",
@@ -395,8 +401,8 @@ export const de: Dictionary = {
   },
   finalCta: {
     title: "Dein zweites Gehirn, auf deinem Desktop.",
-    lead: "Trag dich in die Liste ein, und wir sagen dir Bescheid, sobald du es herunterladen kannst.",
-    cta: "Eintragen",
+    lead: "Lade die Beta herunter und probier sie auf deinem Rechner aus.",
+    cta: "Beta herunterladen",
   },
   footer: {
     tagline: "Dein zweites Gehirn, auf deinem Desktop.",
@@ -426,7 +432,7 @@ export const de: Dictionary = {
           {
             title: "Zweck",
             body: [
-              "Diese Website stellt Enki vor, eine Desktop-App in Entwicklung, und ermöglicht die Anmeldung zu einer Liste, um über neue Versionen informiert zu werden.",
+              "Diese Website stellt Enki vor, eine Desktop-App in Entwicklung, verlinkt auf ihre auf GitHub veröffentlichten Testversionen und ermöglicht die Anmeldung zu einer Liste, um über neue Versionen informiert zu werden.",
             ],
           },
           {
@@ -456,6 +462,7 @@ export const de: Dictionary = {
             body: [
               "Benachrichtigungsliste: Wenn du dich einträgst, verwenden wir deine E-Mail, um dich über neue Enki-Versionen zu informieren. Rechtsgrundlage: deine Einwilligung, die du jederzeit über den Abmeldelink in jeder E-Mail widerrufen kannst.",
               "Analyse: Wir zählen Besuche aggregiert und ohne Cookies mit Umami. Es werden weder IP-Adressen noch persönliche Kennungen gespeichert. Rechtsgrundlage: berechtigtes Interesse daran, welche Teile der Website genutzt werden.",
+              "Downloads: Die Dateien von Enki werden von GitHub heruntergeladen. Wenn du auf einen Download-Link klickst, verlässt du diese Website, und es gilt die Datenschutzerklärung von GitHub.",
             ],
           },
           {

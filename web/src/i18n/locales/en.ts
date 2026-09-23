@@ -19,12 +19,13 @@ export const en: Dictionary = {
     home: "Enki, home",
     placeholder: "Screenshot coming soon",
   },
-  nav: { modules: "Features", privacy: "Privacy", compare: "Compare", faq: "FAQ", cta: "Early access" },
+  nav: { modules: "Features", privacy: "Privacy", compare: "Compare", faq: "FAQ", cta: "Download" },
   hero: {
-    eyebrow: "Alpha 0.1 · Windows · macOS · Linux",
+    eyebrow: "Beta 0.2 · Windows · macOS · Linux",
     titleLines: ["Your second brain,", "on your desktop."],
     lead: "Notes, tasks, calendar and reminders in a single window. Nothing is forced together: everything keeps its place, and you decide how to connect it.",
-    formTitle: "Let me know when I can download it",
+    downloadTitle: "Available now",
+    downloadCta: "Download Enki",
     secondary: "How it works",
     facts: ["No account", "Works offline", "Your notes are Markdown files"],
     screenAlt: "Enki's home dashboard with today's tasks, recent notes and the Kanban board.",
@@ -319,20 +320,25 @@ export const en: Dictionary = {
     cta: "Discover Polar",
   },
   access: {
-    eyebrow: "Early access",
-    title: "Enki is in alpha.",
-    lead: "It's already usable day to day, but there's no public version to download yet. Leave your email and we'll let you know when there is.",
-    status: "In development",
-    soon: "Coming soon",
-    platforms: ["Windows", "macOS", "Linux"],
+    eyebrow: "Downloads",
+    title: "Enki is in beta.",
+    lead: "You can now download Enki for Windows, macOS and Linux. It's a beta: it works day to day, but it may still have bugs. If you find one, let us know.",
+    status: "Public beta",
+    download: "Download",
+    downloadLabel: "Download Enki {version} for {os} {arch}",
+    releaseNotes: "Release notes on GitHub",
+    unsigned:
+      "The builds aren't signed by Microsoft or Apple yet: the first time you open Enki, your system may ask you to confirm that you want to run it.",
+    checksums: "SHA-256 checksums",
+    notifyTitle: "Tell me about new versions",
   },
   faq: {
     eyebrow: "FAQ",
     title: "Frequently asked questions.",
     items: [
       {
-        q: "When can I download Enki?",
-        a: "Enki is in alpha and doesn't have a release date yet. Join the list and we'll email you as soon as there's a public version.",
+        q: "Where can I download Enki?",
+        a: "From the downloads section on this page or from the release page on GitHub. The current version is beta {version}, for Windows, macOS (Apple Silicon and Intel) and Linux.",
       },
       {
         q: "Do I need to create an account?",
@@ -368,8 +374,8 @@ export const en: Dictionary = {
   },
   finalCta: {
     title: "Your second brain, on your desktop.",
-    lead: "Join the list and we'll let you know when you can download it.",
-    cta: "Join the list",
+    lead: "Download the beta and try it on your computer.",
+    cta: "Download the beta",
   },
   footer: {
     tagline: "Your second brain, on your desktop.",
@@ -399,7 +405,7 @@ export const en: Dictionary = {
           {
             title: "Purpose",
             body: [
-              "This website presents Enki, a desktop app in development, and lets you join a list to be notified of new versions.",
+              "This website presents Enki, a desktop app in development, links to its test versions published on GitHub and lets you join a list to be notified of new versions.",
             ],
           },
           {
@@ -426,13 +432,12 @@ export const en: Dictionary = {
             body: [
               "Waitlist: if you sign up, we use your email to tell you about new versions of Enki. Legal basis: your consent, which you can withdraw at any time from the unsubscribe link in every email.",
               "Analytics: we count visits in aggregate and without cookies using Umami. No IP addresses or personal identifiers are stored. Legal basis: legitimate interest in knowing which parts of the site are used.",
+              "Downloads: Enki's files are downloaded from GitHub. When you click a download link you leave this website and GitHub's privacy policy applies.",
             ],
           },
           {
             title: "Processors",
-            body: [
-              "Buttondown (waitlist management) and {hosting} (hosting of the website and the analytics).",
-            ],
+            body: ["Buttondown (waitlist management) and {hosting} (hosting of the website and the analytics)."],
           },
           {
             title: "Retention",

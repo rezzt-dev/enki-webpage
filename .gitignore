@@ -1,6 +1,3 @@
-# local docs (not tracked)
-.docs/
-
 # build output
 dist/
 

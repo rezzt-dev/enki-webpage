@@ -1,17 +1,18 @@
 ---
 /**
- * Hero (03 §2, sección 1): qué es Enki en cinco segundos. CTA primario = apuntarse a la lista (D1-B),
- * así que el formulario va en el propio hero; el secundario baja a "Cómo funciona".
+ * Hero (03 §2, sección 1): qué es Enki en cinco segundos. CTA primario = descargar la beta (baja a la
+ * sección de descargas, donde se elige sistema) y enlace a la release en GitHub; el secundario baja a
+ * "Cómo funciona".
  */
 import ScreenFrame from "@/components/ui/ScreenFrame.astro";
 import Icon from "@/components/ui/Icon.astro";
 import Container from "@/components/ui/Container.astro";
 import Eyebrow from "@/components/ui/Eyebrow.astro";
 import StatusDot from "@/components/ui/StatusDot.astro";
-import NotifyForm from "@/components/islands/NotifyForm.astro";
-import { pagePath, type Locale } from "@/i18n/config";
+import Button from "@/components/ui/Button.astro";
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n";
-import { notifyAction } from "@/lib/notify";
+import { release } from "@/lib/release";
 
 interface Props {
   t: Dictionary;
@@ -46,14 +47,31 @@ const { t, locale } = Astro.props;
           <Icon name="arrow-forward" class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
         </a>
       </div>
-      <div class="lg:col-span-5 lg:col-start-8">
-        <NotifyForm
-          t={t.notify}
-          action={notifyAction()}
-          privacyHref={pagePath(locale, "privacy")}
-          location="hero"
-          title={t.hero.formTitle}
-        />
+      <div class="border border-ink/10 bg-panel p-6 md:p-8 lg:col-span-5 lg:col-start-8">
+        <p class="eyebrow mb-3 flex items-center gap-3">
+          <StatusDot />
+          {t.hero.downloadTitle} · v{release.version}
+        </p>
+        <p class="mb-6 text-sm leading-relaxed text-text-2">
+          {release.assets.map((asset) => `${asset.os} ${asset.arch}`).join(" · ")}
+        </p>
+        <div class="flex flex-wrap items-center gap-x-8 gap-y-5">
+          <Button href="#access" data-track="cta_click" data-track-id="hero_download">
+            <Icon name="download" class="size-4" />
+            {t.hero.downloadCta}
+          </Button>
+          <a
+            href={release.url}
+            class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] transition-opacity duration-200 hover:opacity-60"
+            rel="noopener"
+            target="_blank"
+            data-track="cta_click"
+            data-track-id="hero_release_notes"
+          >
+            {t.access.releaseNotes}
+            <Icon name="arrow-outward" class="size-4" />
+          </a>
+        </div>
       </div>
     </div>
 

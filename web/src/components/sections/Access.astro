@@ -1,18 +1,19 @@
 ---
 /**
- * Acceso anticipado (D1-B: lista de espera en vez de descarga). Sustituye a la sección de descarga del
- * roadmap mientras no haya binarios públicos (D2-C: se alojarán en hosting propio).
+ * Descargas (roadmap 06 §3.3). Lista los assets de `release.ts`, que apuntan a GitHub Releases, y
+ * conserva la lista de avisos (D1-B) para quien quiera enterarse de las versiones siguientes. El id
+ * `#access` se mantiene para no romper los enlaces de la cabecera y del CTA final.
  */
 import Section from "@/components/ui/Section.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 import Icon from "@/components/ui/Icon.astro";
-import Badge from "@/components/ui/Badge.astro";
+import Button from "@/components/ui/Button.astro";
 import StatusDot from "@/components/ui/StatusDot.astro";
 import NotifyForm from "@/components/islands/NotifyForm.astro";
 import { pagePath, type Locale } from "@/i18n/config";
-import type { Dictionary } from "@/i18n";
+import { fill, type Dictionary } from "@/i18n";
 import { notifyAction } from "@/lib/notify";
-import { site } from "@/lib/site";
+import { platformIcon, release } from "@/lib/release";
 
 interface Props {
   t: Dictionary;
@@ -33,26 +34,82 @@ const { t, number, locale } = Astro.props;
   />
 
   <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
-    <div class="lg:col-span-5" data-reveal>
+    <div class="lg:col-span-7" data-reveal>
       <p class="mb-5 flex items-center gap-3 font-mono text-[0.6875rem] font-bold uppercase tracking-[0.2em]">
         <StatusDot />
-        {t.access.status} · v{site.version}
+        {t.access.status} · v{release.version}
       </p>
       <ul class="flex flex-col border-t border-ink/10">
-        {t.access.platforms.map((platform) => (
-          <li class="flex items-center justify-between gap-4 border-b border-ink/10 py-4">
-            <span class="flex items-center gap-3 font-bold uppercase tracking-[0.1em]">
-              <Icon name="desktop-windows-outline" class="size-5 text-ink/60" />
-              {platform}
+        {release.assets.map((asset) => (
+          <li class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-b border-ink/10 py-4">
+            <span class="flex items-center gap-3">
+              <Icon name={platformIcon[asset.platform]} class="size-5 text-ink/60" />
+              <span class="flex flex-col gap-1">
+                <span class="font-bold uppercase tracking-[0.1em]">
+                  {asset.os} <span class="font-normal text-text-2">· {asset.arch}</span>
+                </span>
+                <span class="font-mono text-[0.6875rem] uppercase tracking-[0.15em] text-ink/60">
+                  {asset.format} · {asset.size}
+                </span>
+              </span>
             </span>
-            <Badge>{t.access.soon}</Badge>
+            <Button
+              href={asset.url}
+              variant="outline"
+              size="sm"
+              aria-label={fill(t.access.downloadLabel, {
+                version: release.version,
+                os: asset.os,
+                arch: asset.arch,
+              })}
+              data-track="download_click"
+              data-track-platform={asset.platform}
+              data-track-asset={asset.id}
+            >
+              <Icon name="download" class="size-4" />
+              {t.access.download}
+            </Button>
           </li>
         ))}
       </ul>
+
+      <a
+        href={release.url}
+        class="group mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] transition-opacity duration-200 hover:opacity-60"
+        rel="noopener"
+        target="_blank"
+        data-track="cta_click"
+        data-track-id="release_notes"
+      >
+        {t.access.releaseNotes}
+        <Icon name="arrow-outward" class="size-4" />
+      </a>
+      <p class="mt-6 max-w-xl text-sm leading-relaxed text-text-2">{t.access.unsigned}</p>
+
+      <details class="group mt-6 border-t border-ink/10 pt-4">
+        <summary class="eyebrow flex cursor-pointer list-none items-center gap-2 [&::-webkit-details-marker]:hidden">
+          <Icon name="add" class="size-4 transition-transform duration-300 ease-out-soft group-open:rotate-45" />
+          {t.access.checksums}
+        </summary>
+        <dl class="mt-4 flex flex-col gap-3">
+          {release.assets.map((asset) => (
+            <div>
+              <dt class="text-sm font-bold">{asset.file}</dt>
+              <dd class="break-all font-mono text-xs text-text-2">{asset.sha256}</dd>
+            </div>
+          ))}
+        </dl>
+      </details>
     </div>
 
-    <div class="border border-ink/10 bg-panel p-6 md:p-10 lg:col-span-7" data-reveal style="--reveal-index: 1">
-      <NotifyForm t={t.notify} action={notifyAction()} privacyHref={pagePath(locale, "privacy")} location="access" />
+    <div class="border border-ink/10 bg-panel p-6 md:p-10 lg:col-span-5" data-reveal style="--reveal-index: 1">
+      <NotifyForm
+        t={t.notify}
+        action={notifyAction()}
+        privacyHref={pagePath(locale, "privacy")}
+        location="access"
+        title={t.access.notifyTitle}
+      />
     </div>
   </div>
 </Section>

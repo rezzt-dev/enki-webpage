@@ -28,13 +28,14 @@ export const fr: Dictionary = {
     privacy: "Confidentialité",
     compare: "Comparatif",
     faq: "FAQ",
-    cta: "Accès anticipé",
+    cta: "Télécharger",
   },
   hero: {
-    eyebrow: "Alpha 0.1 · Windows · macOS · Linux",
+    eyebrow: "Bêta 0.2 · Windows · macOS · Linux",
     titleLines: ["Votre second cerveau,", "sur votre bureau."],
     lead: "Notes, tâches, calendrier et rappels dans une seule fenêtre. Rien n’est mélangé de force : chaque chose garde sa place, et c’est vous qui décidez comment les relier.",
-    formTitle: "Prévenez-moi quand je pourrai le télécharger",
+    downloadTitle: "Disponible",
+    downloadCta: "Télécharger Enki",
     secondary: "Comment ça marche",
     facts: ["Sans compte", "Fonctionne hors ligne", "Vos notes sont des fichiers Markdown"],
     screenAlt: "Tableau de bord d’Enki avec les tâches du jour, les notes récentes et le tableau Kanban.",
@@ -361,20 +362,25 @@ export const fr: Dictionary = {
     cta: "Découvrir Polar",
   },
   access: {
-    eyebrow: "Accès anticipé",
-    title: "Enki est en alpha.",
-    lead: "L’app est déjà utilisable au quotidien, mais il n’existe pas encore de version publique à télécharger. Laissez votre e-mail et nous vous préviendrons dès qu’elle sera disponible.",
-    status: "En développement",
-    soon: "Bientôt",
-    platforms: ["Windows", "macOS", "Linux"],
+    eyebrow: "Téléchargements",
+    title: "Enki est en bêta.",
+    lead: "Vous pouvez désormais télécharger Enki pour Windows, macOS et Linux. C’est une bêta : elle est utilisable au quotidien, mais peut encore contenir des bugs. Si vous en trouvez un, écrivez-nous.",
+    status: "Bêta publique",
+    download: "Télécharger",
+    downloadLabel: "Télécharger Enki {version} pour {os} {arch}",
+    releaseNotes: "Notes de version sur GitHub",
+    unsigned:
+      "Les builds ne sont pas encore signées par Microsoft ni par Apple : la première fois que vous ouvrirez Enki, votre système peut vous demander de confirmer que vous voulez l’exécuter.",
+    checksums: "Sommes SHA-256",
+    notifyTitle: "Prévenez-moi des nouvelles versions",
   },
   faq: {
     eyebrow: "FAQ",
     title: "Questions fréquentes.",
     items: [
       {
-        q: "Quand pourrai-je télécharger Enki ?",
-        a: "Enki est en alpha et n’a pas encore de date de sortie. Inscrivez-vous à la liste et nous vous écrirons dès qu’une version publique sera disponible.",
+        q: "Où télécharger Enki ?",
+        a: "Dans la section téléchargements de cette page ou sur la page de la version sur GitHub. La version actuelle est la bêta {version}, pour Windows, macOS (Apple Silicon et Intel) et Linux.",
       },
       {
         q: "Faut-il créer un compte ?",
@@ -413,8 +419,8 @@ export const fr: Dictionary = {
   },
   finalCta: {
     title: "Votre second cerveau, sur votre bureau.",
-    lead: "Inscrivez-vous à la liste et nous vous préviendrons dès que vous pourrez le télécharger.",
-    cta: "M’inscrire",
+    lead: "Téléchargez la bêta et essayez-la sur votre ordinateur.",
+    cta: "Télécharger la bêta",
   },
   footer: {
     tagline: "Votre second cerveau, sur votre bureau.",
@@ -444,7 +450,7 @@ export const fr: Dictionary = {
           {
             title: "Objet",
             body: [
-              "Ce site présente Enki, une application de bureau en développement, et permet de s’inscrire à une liste pour être prévenu des nouvelles versions.",
+              "Ce site présente Enki, une application de bureau en développement, renvoie vers ses versions de test publiées sur GitHub et permet de s’inscrire à une liste pour être prévenu des nouvelles versions.",
             ],
           },
           {
@@ -474,6 +480,7 @@ export const fr: Dictionary = {
             body: [
               "Liste d’attente : si vous vous inscrivez, nous utilisons votre e-mail pour vous prévenir des nouvelles versions d’Enki. Base légale : votre consentement, que vous pouvez retirer à tout moment via le lien de désinscription présent dans chaque e-mail.",
               "Mesure d’audience : nous comptons les visites de façon agrégée et sans cookies avec Umami. Aucune adresse IP ni aucun identifiant personnel n’est conservé. Base légale : intérêt légitime à savoir quelles parties du site sont utilisées.",
+              "Téléchargements : les fichiers d’Enki sont téléchargés depuis GitHub. En cliquant sur un lien de téléchargement, vous quittez ce site et c’est la politique de confidentialité de GitHub qui s’applique.",
             ],
           },
           {

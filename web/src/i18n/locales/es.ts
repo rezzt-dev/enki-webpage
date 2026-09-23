@@ -29,13 +29,14 @@ export const es = {
     privacy: "Privacidad",
     compare: "Comparativa",
     faq: "Preguntas",
-    cta: "Acceso anticipado",
+    cta: "Descargar",
   },
   hero: {
-    eyebrow: "Alfa 0.1 · Windows · macOS · Linux",
+    eyebrow: "Beta 0.2 · Windows · macOS · Linux",
     titleLines: ["Tu segundo cerebro,", "en tu escritorio."],
     lead: "Notas, tareas, calendario y recordatorios en una sola ventana. Sin mezclarlo todo a la fuerza: cada cosa conserva su lugar y tú decides cómo conectarlas.",
-    formTitle: "Avísame cuando pueda descargarlo",
+    downloadTitle: "Ya disponible",
+    downloadCta: "Descargar Enki",
     secondary: "Cómo funciona",
     facts: ["Sin cuenta", "Funciona sin conexión", "Tus notas son archivos Markdown"],
     screenAlt: "Panel de inicio de Enki con las tareas de hoy, las notas recientes y el tablero Kanban.",
@@ -346,20 +347,25 @@ export const es = {
     cta: "Conocer Polar",
   },
   access: {
-    eyebrow: "Acceso anticipado",
-    title: "Enki está en alfa.",
-    lead: "Ya es funcional para el día a día, pero todavía no hay una versión pública para descargar. Déjanos tu email y te avisaremos cuando la haya.",
-    status: "En desarrollo",
-    soon: "Próximamente",
-    platforms: ["Windows", "macOS", "Linux"],
+    eyebrow: "Descargas",
+    title: "Enki está en beta.",
+    lead: "Ya puedes descargar Enki para Windows, macOS y Linux. Es una beta: sirve para el día a día, pero todavía puede tener errores. Si encuentras alguno, escríbenos.",
+    status: "Beta pública",
+    download: "Descargar",
+    downloadLabel: "Descargar Enki {version} para {os} {arch}",
+    releaseNotes: "Notas de la versión en GitHub",
+    unsigned:
+      "Las builds aún no están firmadas por Microsoft ni por Apple: la primera vez que abras Enki, tu sistema puede pedirte que confirmes que quieres ejecutarlo.",
+    checksums: "Sumas SHA-256",
+    notifyTitle: "Avísame de las nuevas versiones",
   },
   faq: {
     eyebrow: "Preguntas",
     title: "Preguntas frecuentes.",
     items: [
       {
-        q: "¿Cuándo podré descargar Enki?",
-        a: "Enki está en fase alfa y aún no tiene fecha de publicación cerrada. Si te apuntas a la lista, te avisaremos por email en cuanto haya una versión pública.",
+        q: "¿Dónde descargo Enki?",
+        a: "En la sección de descargas de esta página o en la página de la versión en GitHub. La versión actual es la beta {version}, para Windows, macOS (Apple Silicon e Intel) y Linux.",
       },
       {
         q: "¿Necesito crear una cuenta?",
@@ -395,8 +401,8 @@ export const es = {
   },
   finalCta: {
     title: "Tu segundo cerebro, en tu escritorio.",
-    lead: "Apúntate a la lista y te avisamos cuando puedas descargarlo.",
-    cta: "Apuntarme",
+    lead: "Descarga la beta y pruébalo en tu equipo.",
+    cta: "Descargar la beta",
   },
   footer: {
     tagline: "Tu segundo cerebro, en tu escritorio.",
@@ -426,7 +432,7 @@ export const es = {
           {
             title: "Objeto",
             body: [
-              "Este sitio presenta Enki, una aplicación de escritorio en desarrollo, y permite apuntarse a una lista para recibir avisos de nuevas versiones.",
+              "Este sitio presenta Enki, una aplicación de escritorio en desarrollo, enlaza a sus versiones de prueba publicadas en GitHub y permite apuntarse a una lista para recibir avisos de nuevas versiones.",
             ],
           },
           {
@@ -456,13 +462,12 @@ export const es = {
             body: [
               "Lista de avisos: si te apuntas, tratamos tu email para avisarte de nuevas versiones de Enki. Base jurídica: tu consentimiento, que puedes retirar en cualquier momento desde el enlace de baja de cada correo.",
               "Analítica: medimos visitas de forma agregada y sin cookies con Umami. No se guardan direcciones IP ni identificadores personales. Base jurídica: interés legítimo en saber qué partes del sitio se usan.",
+              "Descargas: los archivos de Enki se descargan desde GitHub. Al pulsar un enlace de descarga sales de este sitio y se aplica la política de privacidad de GitHub.",
             ],
           },
           {
             title: "Encargados del tratamiento",
-            body: [
-              "Buttondown (gestión de la lista de avisos) y {hosting} (alojamiento del sitio y de la analítica).",
-            ],
+            body: ["Buttondown (gestión de la lista de avisos) y {hosting} (alojamiento del sitio y de la analítica)."],
           },
           {
             title: "Conservación",
