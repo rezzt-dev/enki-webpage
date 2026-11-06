@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## SIN PUBLICAR / UNRELEASED
+
+### CASTELLANO
+
+#### CAMBIADO
+
+- completar las guías de gestión y el contexto específico del proyecto; conservar las reglas técnicas y verificar las rutas
+
+### ENGLISH
+
+#### CHANGED
+
+- complete repository management guides and project-specific context; preserve technical rules and verify paths
+
+
 Registro legible de todos los cambios del proyecto, una seccion por commit, para
 no tener que abrir el historial de git. Los titulos de cada entrada van **en
 mayusculas y sin acentos**. Todo el contenido esta en castellano e ingles.
