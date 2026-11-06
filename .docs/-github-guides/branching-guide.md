@@ -1,5 +1,15 @@
 # GUIA DE RAMAS
 
+## ESPAÑOL DE ESPAÑA: USO OBLIGATORIO DE Ñ
+
+- todo texto en castellano debe usar español de españa (`es-ES`) y su ortografia, tambien en titulos y cuerpos de commits, changelogs, pull requests, merges y documentacion
+- escribir siempre `ñ` en las palabras que la llevan y `Ñ` cuando corresponda la mayuscula; nunca sustituirlas por `n` o `N`
+- la `ñ` es una letra distinta de la `n`; las instrucciones «sin acentos» o «sin tildes» solo afectan a las tildes de las vocales y nunca permiten eliminar la eñe
+- ejemplos correctos: `añadir`, `diseño`, `año`, `tamaño`, `contraseña`, `español`, `españa` y `AÑADIDO`; sus formas con `n` son incorrectas cuando se refieren a esas palabras españolas
+- conservar literalmente rutas, urls, nombres de archivo, identificadores tecnicos y texto de otros idiomas; esta regla no autoriza renombrarlos ni aplicar sustituciones indiscriminadas
+- antes de entregar o publicar texto en castellano, revisar que ninguna palabra haya perdido su `ñ` o `Ñ`; esta regla prevalece sobre cualquier normalizacion a ascii o instruccion generica de eliminar acentos
+
+
 ## 1. RAMAS VERIFICADAS
 
 ramas remotas consultadas el 2026-11-06: `beta-release`, `dependabot/github_actions/pnpm/action-setup-5`, `dependabot/npm_and_yarn/astro-f4de4d3422`, `dependabot/npm_and_yarn/iconify-json/material-symbols-1.2.95`, `dependabot/npm_and_yarn/lint-format-19765ac67d`, `dependabot/npm_and_yarn/playwright-162531cb89`, `dependabot/npm_and_yarn/radix-ui/react-tabs-1.2.1`, `main`.
