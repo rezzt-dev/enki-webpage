@@ -1,19 +1,35 @@
-# CLAUDE.md
+# ENKI-WEBPAGE: WORKING INSTRUCTIONS
 
-El contenido real esta en [`AGENTS.md`](AGENTS.md). Este fichero es solo un
-alias para los agentes que buscan `CLAUDE.md`.
+read [`AGENTS.md`](./agents.md) for the project architecture, module commands, existing conventions and security requirements. this repository implements multilingual static marketing website for the enki desktop application.
 
-**Ambos ficheros existen unicamente para que commits, pull requests y merges
-lean como una extension directa de [`changelog.md`](changelog.md)**, con el
-mismo criterio que sigue `enki-project` en `.docs/commit-guidelines.md` y
-`.docs/pr-merge-release-guidelines.md`.
+the active source lives in `web/`; the changelog is `changelog.md`. the remote default is `main`, and repository-management work currently targets `beta-release`.
 
-Resumen de la regla: siempre que se pida el titulo y la descripcion de un
-commit hay que (1) redactar el mensaje segun el formato de commit y (2)
-añadir, en la misma respuesta, una seccion nueva a
-[`changelog.md`](changelog.md) con sus puntos agrupados por categoria
-(Añadido/Cambios/Corregido/Eliminado/Seguridad, en castellano e ingles). Al
-abrir una pull request o hacer un merge, el titulo y la descripcion se
-extraen literalmente de esa misma entrada del changelog, sin inventar un
-formato distinto por canal. Los detalles completos estan en
-[`AGENTS.md`](AGENTS.md).
+pnpm is required; preserve language parity, accessibility and performance budgets; tests must intercept notification services instead of submitting real subscriptions.
+
+`.docs/manager.md` selects the git workflow guides. `.docs/repo-audit-and-fix.md` defines the separate audit procedure; reading that file does not authorize executing every phase.
+
+for documentation changes, validate paths and `git diff --check`. for application changes, run the relevant checks in `AGENTS.md`. preserve pre-existing user changes and keep this entry point consistent with the comprehensive guide.
+
+## COMMIT, PR, MERGE & RELEASE GUIDELINES
+
+read `.docs/manager.md` first, then the selected guide in `.docs/-github-guides/`. these files are versioned; this digest also works without opening them.
+
+| request | guide |
+| --- | --- |
+| commit title, body and changelog | `commit-guide.md`, `changelog-guide.md` |
+| pull request or merge | `pr-merge-guide.md`, `branching-guide.md` |
+| version and release | `release-guide.md`, `changelog-guide.md` |
+| permissions and sensitive data | `agent-rules.md` |
+
+- inspect `git status`, both diffs and recent history before describing changes
+- use `<prefix> | <imperative summary>` with `update`, `fix`, `hotfix`, `changes` or `changelog`; keep titles within 72 characters
+- write commit bodies as 2 to 6 markdown bullets, one logical change per line, with literal paths in backticks
+- never add authorship footers, automated attribution, signatures or generation notices; preserve the configured git identity
+- update `changelog.md` under `## SIN PUBLICAR / UNRELEASED` in matching `### CASTELLANO` and `### ENGLISH` sections
+- use the existing changelog category vocabulary and preserve language parity; describe only changes in the actual diff
+- summarize pull requests in 1 to 3 bullets per category and language, at most 110 characters per bullet
+- documentation and repository-management work targets `beta-release`; the remote default is `main`; do not silently promote development work to the default branch
+- the authorization for a requested action remains valid throughout that task; creating a pull request includes pushing its branch, but does not authorize merging or publishing
+- use merge commits when a merge is requested; never force-push, rewrite published history or remove branches without an explicit instruction
+- releases use the approved version and an immutable tag on the verified release commit, with english notes from the closed changelog; do not create a release for documentation work
+- deliver requested titles, bodies and changelog fragments in separate code blocks; report executed actions with their commit hash or pull request link
